@@ -1,6 +1,4 @@
-A sample README.md file
-
-# Project Name
+# NIST STEP to OWL Translator (STP2OWL or OntoSTEP 2.0)
 ---
 ## The Goal of this project is
 
