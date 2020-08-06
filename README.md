@@ -1,13 +1,17 @@
-# NIST STEP to OWL Translator (STP2OWL or OntoSTEP 2.0)
----
-## The Goal of this project is
-
-## Code status, pre-release, production.
-
-## Installation Process
-
+# NIST STEP to OWL Translator (STP2OWL)
+- [To be Added]
+## Prerequisites
+- [To be Added]
+## Build the STEP to X3D Translator
+- [To be Added]
+## Usage
+- NIST STP2OWL is a command line software.
 ## Contact Information
-
-## Acknowledgement for reused code if any
+- Soonjo Kwon, soonjo.kwon@nist.gov, soonjo.kwon.1@gmail.com
+- William Z. Bernstein, william.bernstein@nist.gov
+## Version
+1.0
+## Disclaimers
+[NIST Disclaimer](https://www.nist.gov/disclaimer)
 
 
