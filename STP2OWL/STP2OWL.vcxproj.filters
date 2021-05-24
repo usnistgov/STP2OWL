@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Ontology">
+      <UniqueIdentifier>{9a56bff6-8604-4ec5-af41-e8a4a7d50244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exception">
+      <UniqueIdentifier>{fcd9e83e-43c2-4840-9773-be45fa174e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translator">
+      <UniqueIdentifier>{ce609f5e-afa9-4cbb-8579-98983b77c49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{a7f034c0-db07-41cd-89ba-0a02a36d1355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Writer">
+      <UniqueIdentifier>{092c758c-c6b5-47c2-acf0-248fd7219dbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Option">
+      <UniqueIdentifier>{417d544e-a404-45d8-90bf-ddd054d166cd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="STP2OWL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnnotationProperty.cpp">
+      <Filter>Ontology</Filter>
+    </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <Filter>Ontology</Filter>
+    </ClCompile>
+    <ClCompile Include="DataProperty.cpp">
+      <Filter>Ontology</Filter>
+    </ClCompile>
+    <ClCompile Include="DataType.cpp">
+      <Filter>Ontology</Filter>
+    </ClCompile>
+    <ClCompile Include="Individual.cpp">
+      <Filter>Ontology</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Ontology</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectProperty.cpp">
+      <Filter>Ontology</Filter>
+    </ClCompile>
+    <ClCompile Include="Ontology.cpp">
+      <Filter>Ontology</Filter>
+    </ClCompile>
+    <ClCompile Include="S2OException.cpp">
+      <Filter>Exception</Filter>
+    </ClCompile>
+    <ClCompile Include="InstanceTranslator.cpp">
+      <Filter>Translator</Filter>
+    </ClCompile>
+    <ClCompile Include="SchemaChecker.cpp">
+      <Filter>Translator</Filter>
+    </ClCompile>
+    <ClCompile Include="SchemaTranslator.cpp">
+      <Filter>Translator</Filter>
+    </ClCompile>
+    <ClCompile Include="StopWatch.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="StrUtil.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="OntWriter.cpp">
+      <Filter>Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="S2O_Option.cpp">
+      <Filter>Option</Filter>
+    </ClCompile>
+    <ClCompile Include="STP2ONT.cpp">
+      <Filter>Translator</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnnotationProperty.h">
+      <Filter>Ontology</Filter>
+    </ClInclude>
+    <ClInclude Include="Class.h">
+      <Filter>Ontology</Filter>
+    </ClInclude>
+    <ClInclude Include="DataProperty.h">
+      <Filter>Ontology</Filter>
+    </ClInclude>
+    <ClInclude Include="DataType.h">
+      <Filter>Ontology</Filter>
+    </ClInclude>
+    <ClInclude Include="Individual.h">
+      <Filter>Ontology</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Ontology</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectProperty.h">
+      <Filter>Ontology</Filter>
+    </ClInclude>
+    <ClInclude Include="Ontology.h">
+      <Filter>Ontology</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STEPcodeLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S2OException.h">
+      <Filter>Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="S2OExceptionTest.h">
+      <Filter>Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="InstanceTranslator.h">
+      <Filter>Translator</Filter>
+    </ClInclude>
+    <ClInclude Include="SchemaChecker.h">
+      <Filter>Translator</Filter>
+    </ClInclude>
+    <ClInclude Include="SchemaTranslator.h">
+      <Filter>Translator</Filter>
+    </ClInclude>
+    <ClInclude Include="StopWatch.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="StrUtil.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="OntWriter.h">
+      <Filter>Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="S2O_Option.h">
+      <Filter>Option</Filter>
+    </ClInclude>
+    <ClInclude Include="OWL2ProfileEnum.h">
+      <Filter>Option</Filter>
+    </ClInclude>
+    <ClInclude Include="STP2ONT.h">
+      <Filter>Translator</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputModeEnum.h">
+      <Filter>Option</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

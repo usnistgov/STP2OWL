@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{fdee5d1d-f6b7-4380-b65f-5767266eec5e}</ProjectGuid>
+    <RootNamespace>STP2OWL</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\stepcode\include;$(SolutionDir)\stepcode\bin\include;$(SolutionDir)\stepcode\bin\schemas;$(SolutionDir)\stepcode\src\cldai;$(SolutionDir)\stepcode\src\cleditor;$(SolutionDir)\stepcode\src\clutils;$(SolutionDir)\stepcode\src\clstepcore;$(SolutionDir)\stepcode\src\base;$(SolutionDir)\stepcode\src\base\judy\src;$(SolutionDir)\stepcode\src\cllazyfile;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\stepcode\bin\Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sdai_ap203.lib;sdai_ap203e2.lib;sdai_ap209.lib;sdai_ap210e2.lib;sdai_ap210e3.lib;sdai_ap214e3.lib;sdai_ap219.lib;sdai_ap227.lib;sdai_ap235.lib;sdai_ap238.lib;sdai_ap239.lib;sdai_ap240.lib;sdai_ap242.lib;sdai_ap242e2.lib;sdai_ifc2x3.lib;sdai_IFC4.lib;sdai_ISO15926.lib;sdai_pdm.lib;stepeditor.lib;stepcore.lib;stepdai.lib;steputils.lib;steplazyfile.lib;base.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\stepcode\include;$(SolutionDir)\stepcode\bin\include;$(SolutionDir)\stepcode\bin\schemas;$(SolutionDir)\stepcode\src\cldai;$(SolutionDir)\stepcode\src\cleditor;$(SolutionDir)\stepcode\src\clutils;$(SolutionDir)\stepcode\src\clstepcore;$(SolutionDir)\stepcode\src\base;$(SolutionDir)\stepcode\src\base\judy\src;$(SolutionDir)\stepcode\src\cllazyfile;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\stepcode\bin\Release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sdai_ap203.lib;sdai_ap203e2.lib;sdai_ap209.lib;sdai_ap210e2.lib;sdai_ap210e3.lib;sdai_ap214e3.lib;sdai_ap219.lib;sdai_ap227.lib;sdai_ap235.lib;sdai_ap238.lib;sdai_ap239.lib;sdai_ap240.lib;sdai_ap242.lib;sdai_ap242e2.lib;sdai_ifc2x3.lib;sdai_IFC4.lib;sdai_ISO15926.lib;sdai_pdm.lib;stepeditor.lib;stepcore.lib;stepdai.lib;steputils.lib;steplazyfile.lib;base.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AnnotationProperty.cpp" />
+    <ClCompile Include="Class.cpp" />
+    <ClCompile Include="DataProperty.cpp" />
+    <ClCompile Include="DataType.cpp" />
+    <ClCompile Include="Individual.cpp" />
+    <ClCompile Include="InstanceTranslator.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectProperty.cpp" />
+    <ClCompile Include="Ontology.cpp" />
+    <ClCompile Include="OntWriter.cpp" />
+    <ClCompile Include="S2OException.cpp" />
+    <ClCompile Include="S2O_Option.cpp" />
+    <ClCompile Include="SchemaChecker.cpp" />
+    <ClCompile Include="SchemaTranslator.cpp" />
+    <ClCompile Include="STP2ONT.cpp" />
+    <ClCompile Include="StopWatch.cpp" />
+    <ClCompile Include="STP2OWL.cpp" />
+    <ClCompile Include="StrUtil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnnotationProperty.h" />
+    <ClInclude Include="Class.h" />
+    <ClInclude Include="DataProperty.h" />
+    <ClInclude Include="DataType.h" />
+    <ClInclude Include="Individual.h" />
+    <ClInclude Include="InstanceTranslator.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectProperty.h" />
+    <ClInclude Include="Ontology.h" />
+    <ClInclude Include="OntWriter.h" />
+    <ClInclude Include="OutputModeEnum.h" />
+    <ClInclude Include="OWL2ProfileEnum.h" />
+    <ClInclude Include="S2OException.h" />
+    <ClInclude Include="S2OExceptionTest.h" />
+    <ClInclude Include="S2O_Option.h" />
+    <ClInclude Include="SchemaChecker.h" />
+    <ClInclude Include="SchemaTranslator.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="STP2ONT.h" />
+    <ClInclude Include="STEPcodeLib.h" />
+    <ClInclude Include="StopWatch.h" />
+    <ClInclude Include="StrUtil.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
