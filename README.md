@@ -1,5 +1,5 @@
-# OntoSTEP 2.0: NIST STEP to OWL Translator(STP2OWL)
-The NIST STEP to OWL Translator(STP2OWL) is is an open-source software, and an improved implementation of [OntoSTEP](https://www.nist.gov/services-resources/software/ontostep-plugin). STP2OWL translates STEP schemas and instance files in a faster and more flexible way, thus furthering the adoption of the full capabilities of ISO 10303. Developed at the National Institute of Standards and Technology (NIST), the software is based on the [STEPcode](https://github.com/stepcode/stepcode) and written in C++.
+# OntoSTEP 2.0: NIST STEP to OWL Translator (STP2OWL)
+The NIST STEP to OWL Translator (STP2OWL) is is an open-source software, and an improved implementation of [OntoSTEP](https://www.nist.gov/services-resources/software/ontostep-plugin). STP2OWL translates STEP schemas and instance files in a faster and more flexible way, thus furthering the adoption of the full capabilities of ISO 10303. Developed at the National Institute of Standards and Technology (NIST), the software is based on the [STEPcode](https://github.com/stepcode/stepcode) and written in C++.
 
 ## Prerequisites
 - [STEPcode](https://github.com/stepcode/stepcode) v0.9
@@ -9,14 +9,14 @@ The NIST STEP to OWL Translator(STP2OWL) is is an open-source software, and an i
     - VC++ related: msvcp140.dll, vcruntime140.dll (vcruntime140_1.dll will also be required when vc141 or higher was used to build.)
 
 ## Build the STEP to OWL Translator
-- Unzip the "stepcode.zip" and locate the folder to where the VS solution(STP2OWL.sln) file is located at.
+- Unzip the "stepcode.zip" and locate the folder to where the VS solution file (STP2OWL.sln) is located.
 - Create a "bin" folder and build the stepcode in that folder using CMake (See [here](https://github.com/stepcode/stepcode/blob/master/INSTALL) for more details).
 - Unzip the "schemas.zip" to "stepcode\bin\schemas" and overwrite the same files.
 - Build all the projects in "stepcode\bin\SC.sln".
 - Build "STP2OWL.sln".
 
 ## Usage
-- NIST STP2X3D is a command line software. Please check out the [Usage guide](USAGE.md).
+- NIST STP2OWL is a command line software. Please check out the [Usage guide](USAGE.md).
 
 ## Contact Information
 - Soonjo Kwon, soonjo.kwon@kumoh.ac.kr
