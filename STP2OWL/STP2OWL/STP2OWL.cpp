@@ -9,19 +9,20 @@
 void PrintUsage(string exe, S2O_Option* opt)
 {
 	cout << endl;
-	cout << "//////////////////////////////////////////////////////////////" << endl;
-	cout << "//  OntoSTEP 2.0: NIST STEP to OWL Translator(STP2OWL) " << opt->Version() << "  //" << endl;
-	cout << "//////////////////////////////////////////////////////////////" << endl;
+	cout << "////////////////////////////////////////////////" << endl;
+	cout << "//  NIST STEP to OWL Translator(STP2OWL) " << opt->Version() << "  //" << endl;
+	cout << "////////////////////////////////////////////////" << endl;
 	cout << endl;
 	cout << "[Usage]" << endl;
 	cout << " " << exe << " option1 value1 option2 value2.." << endl;
 	cout << endl;
 	cout << "[Options]" << endl;
 	cout << " --input      STEP file path" << endl;
-	cout << " --schema     STEP Schema (Available input:203,203e2,210e2,210e3,214e3,219,227,235,238,239,240,242,242e2,IFC2X3,IFC4,ISO15926,PDM)" << endl;
-	cout << " --profile    OWL 2 Profile (Available input:DL,EL,QL,RL) default=DL" << endl;
-	cout << " --mode       Output Mode (0:schema,instance, 1:instance, 2:schema, 3:integrated) default=" << (int)opt->Mode() << endl;
-	cout << " --simgeom    Simple Geometry (1:yes, 0:no) default=" << opt->IsSimpleGeomtry() << endl;
+	cout << " --schema     STEP schema (Input:203,203e2,210e2,210e3,214e3,219,227,235,238,239,240,242,242e2,IFC2X3,IFC4,ISO15926,PDM)" << endl;
+	cout << "              The schema of the input STEP file always precedes over this option." << endl;
+	cout << " --profile    OWL 2 profile (Input:DL,EL,QL,RL) default=DL" << endl;
+	cout << " --mode       Output mode (0:separated(schema,instance),1:instance,2:schema,3:integrated) default=" << (int)opt->Mode() << endl;
+	cout << " --simgeom    Simplified geometry representation (1:yes,0:no) default=" << opt->IsSimpleGeomtry() << endl;
 	cout << " --filter     CSV file path for STEP entity names to be kept in the OWL instances" << endl;
 	cout << endl;
 	cout << "[Examples]" << endl;
