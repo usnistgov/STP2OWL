@@ -4,7 +4,7 @@ The NIST STEP to OWL Translator (STP2OWL) is is an open-source software, and an 
 ## Prerequisites
 - [STEPcode](https://github.com/stepcode/stepcode) v0.9
   - You must build the STEPcode solution first to generate DLL files.
-  - The complete set of DLL files required for STP2OWL to run is as follows.
+  - The complete set of DLL files required for the current STP2OWL to run is as follows.
     - STEPcode related: stepdai.dll, stepcore.dll, stepeditor.dll, steputils.dll, sdai_ap203.dll, sdai_ap203e2.dll, sdai_ap209.dll, sdai_ap210e2.dll, sdai_ap210e3.dll, sdai_ap214e3.dll, sdai_ap219.dll, sdai_ap227.dll, sdai_ap235.dll, sdai_ap238.dll, sdai_ap239.dll, sdai_ap240.dll, sdai_ap242.dll, sdai_ap242e2.dll, sdai_ifc2x3.dll, sdai_IFC4.dll, sdai_ISO15926.dll, sdai_pdm.dll (Users can generate new DLLs for new schemas.)
     - VC++ related: msvcp140.dll, vcruntime140.dll (vcruntime140_1.dll will also be required when vc141 or higher was used to build.)
 
