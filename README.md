@@ -11,8 +11,9 @@ The NIST STEP to OWL Translator (STP2OWL) is is an open-source software, and an 
 ## Build the STEP to OWL Translator
 - Unzip the "stepcode.zip" and locate the folder to where the VS solution file (STP2OWL.sln) is located.
 - Create a "bin" folder and build the stepcode in that folder using CMake (See [here](https://github.com/stepcode/stepcode/blob/master/INSTALL) for more details).
-- Unzip the "schemas.zip" to "stepcode\bin\schemas" and overwrite the same files.
 - Build all the projects in "stepcode\bin\SC.sln".
+- Unzip the "schemas.zip" to "stepcode\bin\schemas" and overwrite the same files.
+- Rebuild all the projects in "stepcode\bin\SC.sln".
 - Build "STP2OWL.sln".
 
 ## Usage
