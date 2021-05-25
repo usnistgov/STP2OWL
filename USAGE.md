@@ -7,6 +7,7 @@ The following information describes how to use the software. Running the executi
 ## Options
 - --input: Input STEP file path
 - --schema: STEP schema (Available input:203,203e2,209,210e2,210e3,214e3,219,227,235,238,239,240,242,242e2,IFC2X3,IFC4,ISO15926,PDM)
+  - The schema of the input STEP file always precedes over this option.
 - --profile: OWL 2 profile (Available input:DL,EL,QL,RL) default=DL
 - --mode: Output mode (0:schema,instance, 1:instance, 2:schema, 3:integrated) default=0
 - --simgeom: Simplified geometry representation (1:yes, 0:no) default=0
