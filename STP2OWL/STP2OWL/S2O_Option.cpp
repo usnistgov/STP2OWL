@@ -84,20 +84,25 @@ string S2O_Option::Output(const string& type)
 
     if (m_owl2Profile == OWL2Profile::OWL2_DL)
     {
-        output += "_DL.owl";
+        output += "_DL";
     }
     else if (m_owl2Profile == OWL2Profile::OWL2_EL)
     {
-        output += "_EL.owl";
+        output += "_EL";
     }
     else if (m_owl2Profile == OWL2Profile::OWL2_RL)
     {
-        output += "_RL.owl";
+        output += "_RL";
     }
     else if (m_owl2Profile == OWL2Profile::OWL2_QL)
     {
-        output += "_QL.owl";
+        output += "_QL";
     }
+
+    if (m_simpleGeometry)
+        output += "_sim";
+
+    output += ".owl";
 
     return output;
 }

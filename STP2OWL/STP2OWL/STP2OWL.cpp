@@ -18,7 +18,7 @@ void PrintUsage(string exe, S2O_Option& opt)
 	cout << endl;
 	cout << "[Options]" << endl;
 	cout << " --input      STEP file path" << endl;
-	cout << " --schema     STEP schema (Input:203,203e2,210e2,210e3,214e3,219,227,235,238,239,240,242,242e2,IFC2X3,IFC4,ISO15926,PDM)" << endl;
+	cout << " --schema     STEP schema (Input:203,203e2,209,210e2,210e3,214e3,219,227,235,238,239,240,242,242e2,IFC2X3,IFC4,ISO15926,PDM)" << endl;
 	cout << "              The schema of the input STEP file always precedes over this option." << endl;
 	cout << " --profile    OWL 2 profile (Input:DL,EL,QL,RL) default=DL" << endl;
 	cout << " --mode       Output mode (0:separated(schema,instance),1:instance,2:schema,3:integrated) default=" << (int)opt.Mode() << endl;
