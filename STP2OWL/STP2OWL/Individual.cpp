@@ -19,21 +19,21 @@ void Individual::AddClassType(Class* cls)
 	if (m_classNameTypeMap.find(cls->GetName()) != m_classNameTypeMap.end())
 		return;
 
-	m_classTypes.push_back(cls);
-	m_classNameTypeMap.insert({ cls->GetName() , cls });
+	m_classTypes.emplace_back(cls);
+	m_classNameTypeMap.emplace(cls->GetName(), cls);
 }
 
 void Individual::AddObjPropertyAssertion(ObjectProperty* objProp, Individual* indvl)
 {
 	assert(objProp);
 	assert(indvl);
-	m_objectPropertyAssertions.push_back({ objProp,indvl });
+	m_objectPropertyAssertions.emplace_back(objProp, indvl);
 }
 
 void Individual::AddDataPropertyAssertion(DataProperty* datProp, string str)
 {
 	assert(datProp);
-	m_dataPropertyAssertions.push_back({ datProp,str });
+	m_dataPropertyAssertions.emplace_back(datProp, str);
 }
 
 void Individual::Clear()

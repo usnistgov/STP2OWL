@@ -9,10 +9,10 @@ class DataProperty;
 class SchemaTranslator
 {
 public:
-	SchemaTranslator(const Schema* schema, Ontology* ontology);
+	SchemaTranslator(const Schema*& schema, Ontology* ontology);
 	~SchemaTranslator();
 
-	void Translate(S2O_Option* opt);
+	void Translate(S2O_Option& opt);
 
 protected:
 	void AddClassesForEntities(const EntityDescriptorList* eDesList);

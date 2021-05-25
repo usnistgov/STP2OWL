@@ -12,11 +12,20 @@ SchemaChecker::~SchemaChecker()
 	m_schemaMap.clear();
 }
 
-const Schema* SchemaChecker::InitializeSchema(Registry*& reg)
+bool SchemaChecker::InitializeSchema(Registry*& reg, S2O_Option& opt)
 {
-	if (!m_stpFilePath.empty())
+	if (!opt.Input().empty())
+	{
+		SetSTEPFilePath(opt.Input());
 		SetSchemaFromSTEPFile();
-
+	}
+	else
+	{
+		SetShortName(opt.Schema());
+		opt.SetMode(2);
+		opt.SetInput(opt.Schema()); // For output file name
+	}
+	
 	string schemaName = GetShortName();
 	schemaName = StrUtil::ToLower(schemaName);
 
@@ -59,16 +68,15 @@ const Schema* SchemaChecker::InitializeSchema(Registry*& reg)
 	else
 	{
 		cout << "Invalid schema! (" << GetCurrentName() << ")" << endl;
-		cout << "Available schemas:203,203e2,210e2,210e3,214e3,219,227,235,238,239,240,242,242e2,IFC2X3,IFC4,ISO15926,PDM" << endl;
-		cout << "Schema is set to STEP AP242e2" << endl;
-
-		SetShortName("242e2");
-		reg = new Registry(SchemaInitAP242E2);
 	}
-
-	const Schema* sc = reg->FindSchema(GetLongName().c_str());
-
-	return sc;
+	
+	if (reg)
+	{
+		cout << "\n[Schema: " << GetLongName() << " (" << GetShortName() << ")" << "]" << endl << endl;
+		return true;
+	}
+	
+	return false;
 }
 
 bool SchemaChecker::HasMatch(string input, string& output)
@@ -78,8 +86,8 @@ bool SchemaChecker::HasMatch(string input, string& output)
 		string schemaLower = StrUtil::ToLower(m_schemaMap[i].second);
 		string schemaUpper = StrUtil::ToUpper(m_schemaMap[i].second);
 
-		if (StrUtil::IsExisting(input, schemaLower)
-			|| StrUtil::IsExisting(input, schemaUpper))
+		if (StrUtil::Exist(input, schemaLower)
+			|| StrUtil::Exist(input, schemaUpper))
 		{
 			output = m_schemaMap[i].first;
 			return true;
@@ -138,12 +146,12 @@ void SchemaChecker::SetSchemaFromSTEPFile()
 
 		while (getline(myfile, line))
 		{
-			if (StrUtil::IsExisting(line, "FILE_SCHEMA"))
+			if (StrUtil::Exist(line, "FILE_SCHEMA"))
 			{
 				// check the same line
 				string tmp = StrUtil::GetStringBetween(line, "'", "'");
 				
-				if (StrUtil::IsExisting(line, "'"))
+				if (StrUtil::Exist(line, "'"))
 					GetCurrentNameFromLine(tmp);
 
 				if (HasMatch(tmp, m_targetSchemaShortName))
@@ -154,7 +162,7 @@ void SchemaChecker::SetSchemaFromSTEPFile()
 
 				tmp = StrUtil::GetStringBetween(line, "'", "'");
 
-				if (StrUtil::IsExisting(line, "'"))
+				if (StrUtil::Exist(line, "'"))
 					GetCurrentNameFromLine(tmp);
 
 				if (HasMatch(tmp, m_targetSchemaShortName))
@@ -170,9 +178,9 @@ void SchemaChecker::SetSchemaFromSTEPFile()
 
 void SchemaChecker::GetCurrentNameFromLine(string line)
 {
-	if (StrUtil::IsExisting(line, " {"))
+	if (StrUtil::Exist(line, " {"))
 		m_currentSchemaName = line.substr(0, line.find(" {"));
-	else if (StrUtil::IsExisting(line, "{"))
+	else if (StrUtil::Exist(line, "{"))
 		m_currentSchemaName = line.substr(0, line.find("{"));
 	else
 		m_currentSchemaName = line;

@@ -12,10 +12,10 @@ public:
 	Ontology* GetOntology() { return m_ontology; }
 
 	// Translate the schema to ontology.
-	void TranslateSchema(const Schema* schema, S2O_Option* opt);
+	void TranslateSchema(const Schema*& schema, S2O_Option& opt);
 
 	// Translate the instances to ontology.
-	void TranslateInstances(InstMgr* instList, S2O_Option* opt);
+	void TranslateInstances(InstMgr*& instList, S2O_Option& opt);
 
 	void SetStepPrefix(string prefix) { m_schemaPrefix = prefix; }
 	string GetStepPrefix() { return m_schemaPrefix; }

@@ -33,7 +33,7 @@ protected:
 
 private:
 	vector<Class*> m_classTypes;
-	map<string, Class*> m_classNameTypeMap;
+	unordered_map<string, Class*> m_classNameTypeMap;
 	vector<ObjPropertyAssertion> m_objectPropertyAssertions;
 	vector<DataPropertyAssertion> m_dataPropertyAssertions;
 };

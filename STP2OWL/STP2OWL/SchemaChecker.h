@@ -13,7 +13,7 @@ public:
 	void SetSTEPFilePath(const string& filePath) { m_stpFilePath = filePath; }
 
 	// Initialize schema
-	const Schema* InitializeSchema(Registry*& reg);
+	bool InitializeSchema(Registry*& reg, S2O_Option& opt);
 	
 	// Set the short schema name.
 	void SetShortName(const string& shortName) { m_targetSchemaShortName = shortName; }

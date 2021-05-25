@@ -9,12 +9,12 @@
 #include "DataType.h"
 #include "AnnotationProperty.h"
 
-void OntWriter::WriteOWLFunctionalSyntax(STP2ONT*& s2o, S2O_Option& opt)
+void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 {
-	Ontology* ont = s2o->GetOntology();
+	Ontology* ont = s2o.GetOntology();
 	
-	string schemaName = s2o->GetName();
-	string schemaPrefix = s2o->GetStepPrefix();
+	string schemaName = s2o.GetName();
+	string schemaPrefix = s2o.GetStepPrefix();
 
 	string ontoSchemaPrefix = "http://www.nist.gov/OntoSTEP/" + schemaName;
 	string ontoInstancePrefix = "http://www.nist.gov/OntoSTEP/instances";
@@ -477,8 +477,8 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT*& s2o, S2O_Option& opt)
 
 				// Remove expoents from the string
 				if (datPropTypeName == "xsd:decimal"
-					&& (StrUtil::IsExisting(datPropValue, "E")
-						|| StrUtil::IsExisting(datPropValue, "e")))
+					&& (StrUtil::Exist(datPropValue, "E")
+						|| StrUtil::Exist(datPropValue, "e")))
 				{
 					double val = stod(datPropValue);
 					datPropValue = to_string(val);
@@ -614,8 +614,8 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT*& s2o, S2O_Option& opt)
 
 				// Remove expoents from the string
 				if (datPropTypeName == "xsd:decimal"
-					&& (StrUtil::IsExisting(datPropValue, "E")
-					|| StrUtil::IsExisting(datPropValue, "e")))
+					&& (StrUtil::Exist(datPropValue, "E")
+					|| StrUtil::Exist(datPropValue, "e")))
 				{
 					double val = stod(datPropValue);
 					datPropValue = to_string(val);

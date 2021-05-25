@@ -69,9 +69,9 @@ string StrUtil::GetStringBetweenParenthesis(string str, int leftParenLocation)
 	{
 		string ch(1, str.at(i));
 
-		if (Equals(ch, "("))
+		if (Equal(ch, "("))
 			flag++;
-		else if (Equals(ch, ")"))
+		else if (Equal(ch, ")"))
 			flag--;
 
 		if (flag == 0)
@@ -117,11 +117,11 @@ void StrUtil::SplitStringByCommaInParentheses(string str, vector<string>& subStr
 	RemoveCharacter(str, " ");
 
 	// list of list OR array of array (e.g. (0,0,0),(0,0,0) )
-	if (IsExisting(str, leftParen)
-		&& IsExisting(str, rightParen)
-		&& IsExisting(str, sep)
-		&& StartsWith(str, leftParen)
-		&& EndsWith(str, rightParen))
+	if (Exist(str, leftParen)
+		&& Exist(str, rightParen)
+		&& Exist(str, sep)
+		&& StartWith(str, leftParen)
+		&& EndWith(str, rightParen))
 	{
 		string token;
 
@@ -132,7 +132,7 @@ void StrUtil::SplitStringByCommaInParentheses(string str, vector<string>& subStr
 			token = GetStringBetweenParenthesis(str, 0);
 			token = leftParen + token + rightParen;
 
-			if (Equals(token, str))
+			if (Equal(token, str))
 				break;
 
 			subStrs.push_back(token);
@@ -141,8 +141,8 @@ void StrUtil::SplitStringByCommaInParentheses(string str, vector<string>& subStr
 			location = str.find(leftParen);
 		}
 
-		if (IsExisting(str, leftParen)
-			&& IsExisting(str, rightParen))
+		if (Exist(str, leftParen)
+			&& Exist(str, rightParen))
 		{
 			subStrs.push_back(str);	// do not save null string.
 		}
@@ -153,7 +153,7 @@ void StrUtil::SplitStringByCommaInParentheses(string str, vector<string>& subStr
 	}
 }
 
-bool StrUtil::IsExisting(string str, string target)
+bool StrUtil::Exist(string str, string target)
 {
 	if (str.find(target) == -1)
 		return false;
@@ -161,7 +161,7 @@ bool StrUtil::IsExisting(string str, string target)
 	return true;
 }
 
-bool StrUtil::Equals(string a, string b)
+bool StrUtil::Equal(string a, string b)
 {
 	if (a == b)
 		return true;
@@ -169,7 +169,7 @@ bool StrUtil::Equals(string a, string b)
 	return false;
 }
 
-bool StrUtil::StartsWith(string str, string target)
+bool StrUtil::StartWith(string str, string target)
 {
 	if (str.find(target) == 0)
 		return true;
@@ -177,7 +177,7 @@ bool StrUtil::StartsWith(string str, string target)
 	return false;
 }
 
-bool StrUtil::EndsWith(string str, string target)
+bool StrUtil::EndWith(string str, string target)
 {
 	if (str.find_last_of(target) == str.length() - 1)
 		return true;

@@ -14,7 +14,7 @@ public:
 	void SetName(string name) { m_name = name; }
 	string GetName() { return m_name; }
 
-	void AddAnnotation(Annotation anno) { m_annotations.push_back(anno); }
+	void AddAnnotation(Annotation anno) { m_annotations.emplace_back(anno); }
 	int GetAnnotationSize() { return (int)m_annotations.size(); }
 	Annotation GetAnnotationAt(int index) { return m_annotations[index]; }
 	

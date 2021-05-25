@@ -21,25 +21,25 @@ ObjectProperty::~ObjectProperty()
 void ObjectProperty::AddDomain(Class* domain)
 {
 	assert(domain);
-	m_domains.push_back(domain);
+	m_domains.emplace_back(domain);
 }
 
 void ObjectProperty::AddRange(Class* range)
 {
 	assert(range);
-	m_ranges.push_back(range);
+	m_ranges.emplace_back(range);
 }
 
 void ObjectProperty::AddSuperProperty(ObjectProperty* superProperty)
 {
 	assert(superProperty);
-	m_superProperties.push_back(superProperty);
+	m_superProperties.emplace_back(superProperty);
 }
 
 void ObjectProperty::AddInverseProperty(ObjectProperty* inverseProperty)
 {
 	assert(inverseProperty);
-	m_inverseProperties.push_back(inverseProperty);
+	m_inverseProperties.emplace_back(inverseProperty);
 }
 
 void ObjectProperty::Clear()

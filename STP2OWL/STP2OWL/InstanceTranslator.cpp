@@ -8,7 +8,7 @@
 #include "Individual.h"
 
 
-InstanceTranslator::InstanceTranslator(InstMgr* instList, Ontology* ontology)
+InstanceTranslator::InstanceTranslator(InstMgr*& instList, Ontology*& ontology)
 	:m_ontology(ontology),
 	m_instList(instList),
 	m_simpleGeometry(false)
@@ -20,9 +20,9 @@ InstanceTranslator::~InstanceTranslator()
 {
 }
 
-void InstanceTranslator::Translate(S2O_Option* opt)
+void InstanceTranslator::Translate(S2O_Option& opt)
 {
-	m_simpleGeometry = opt->IsSimpleGeomtry();
+	m_simpleGeometry = opt.IsSimpleGeomtry();
 
 	AddIndividualsForInstances();
 }
@@ -290,9 +290,9 @@ void InstanceTranslator::AddPropertyAssertion(Individual* indvl, ObjectProperty*
 		string str;
 		val->asStr(str);
 
-		if (StrUtil::Equals(str, "T"))
+		if (StrUtil::Equal(str, "T"))
 			str = "TRUE";
-		else if (StrUtil::Equals(str, "F"))
+		else if (StrUtil::Equal(str, "F"))
 			str = "FALSE";
 		else
 			str = "UNKNOWN";
@@ -334,7 +334,7 @@ void InstanceTranslator::AddPropertyAssertion(Individual* indvl, ObjectProperty*
 void InstanceTranslator::AddObjectPropertyAssertion(Individual* domainIndvl, ObjectProperty* objProp, string rangeIndvlName)
 {
 	// remove blank
-	if (StrUtil::IsExisting(rangeIndvlName, " "))
+	if (StrUtil::Exist(rangeIndvlName, " "))
 		rangeIndvlName = StrUtil::RemoveCharacter(rangeIndvlName, " ");
 
 	rangeIndvlName = StrUtil::RemoveCharacter(rangeIndvlName, "\n");	// next line
@@ -347,19 +347,19 @@ void InstanceTranslator::AddObjectPropertyAssertion(Individual* domainIndvl, Obj
 
 void InstanceTranslator::AddDataPropertyAssertion(Individual* domainIndvl, string domainTypeName, string datPropName, string rangeValue)
 {
-	if (StrUtil::Equals(datPropName, "to_decimal")
-		|| StrUtil::Equals(datPropName, "to_integer")
-		|| StrUtil::Equals(datPropName, "has_x")
-		|| StrUtil::Equals(datPropName, "has_y")
-		|| StrUtil::Equals(datPropName, "has_z"))
+	if (StrUtil::Equal(datPropName, "to_decimal")
+		|| StrUtil::Equal(datPropName, "to_integer")
+		|| StrUtil::Equal(datPropName, "has_x")
+		|| StrUtil::Equal(datPropName, "has_y")
+		|| StrUtil::Equal(datPropName, "has_z"))
 	{
 		rangeValue = StrUtil::RemoveCharacter(rangeValue, "\n");	// next line
 		rangeValue = StrUtil::RemoveCharacter(rangeValue, "\t");	// tab
 		rangeValue = StrUtil::RemoveCharacter(rangeValue, " ");		// blank
 
-		if (!StrUtil::Equals(datPropName, "to_integer"))
+		if (!StrUtil::Equal(datPropName, "to_integer"))
 		{
-			if (StrUtil::IsExisting(rangeValue, ".")
+			if (StrUtil::Exist(rangeValue, ".")
 				&& rangeValue.find(".") == rangeValue.length() - 1) // e.g. "1." to "1.0"
 				rangeValue = StrUtil::ReplaceCharacter(rangeValue, ".", ".0");
 
@@ -367,16 +367,16 @@ void InstanceTranslator::AddDataPropertyAssertion(Individual* domainIndvl, strin
 			rangeValue = StrUtil::ReplaceCharacter(rangeValue, ".E", ".0E");
 		}
 	}
-	else if (StrUtil::Equals(datPropName, "to_string"))
+	else if (StrUtil::Equal(datPropName, "to_string"))
 	{
 		rangeValue = StrUtil::GetStringBetween(rangeValue, "'", "'");
 		rangeValue = StrUtil::ReplaceCharacter(rangeValue, "\\", "\\\\");
 	}
-	else if (StrUtil::Equals(datPropName, "to_boolean"))
+	else if (StrUtil::Equal(datPropName, "to_boolean"))
 	{
-		if (StrUtil::IsExisting(rangeValue, "T"))
+		if (StrUtil::Exist(rangeValue, "T"))
 			rangeValue = "true";
-		else if (StrUtil::IsExisting(rangeValue, "F"))
+		else if (StrUtil::Exist(rangeValue, "F"))
 			rangeValue = "false";
 	}
 
@@ -497,9 +497,9 @@ void InstanceTranslator::AddPropertyAssertionsForSetBag(string aggrIndvlName, st
 			}
 			else if (attrDomRefFundType == sdaiLOGICAL)
 			{
-				if (StrUtil::IsExisting(subStr, "T"))
+				if (StrUtil::Exist(subStr, "T"))
 					subStr = "TRUE";
-				else if (StrUtil::IsExisting(subStr, "F"))
+				else if (StrUtil::Exist(subStr, "F"))
 					subStr = "FALSE";
 				else
 					subStr = "UNKNOWN";
@@ -634,9 +634,9 @@ void InstanceTranslator::AddPropertyAssertionsForArrayList(string aggrIndvlName,
 			}
 			else if (attrDomRefFundType == sdaiLOGICAL)
 			{
-				if (StrUtil::IsExisting(subStr, "T"))
+				if (StrUtil::Exist(subStr, "T"))
 					subStr = "TRUE";
-				else if (StrUtil::IsExisting(subStr, "F"))
+				else if (StrUtil::Exist(subStr, "F"))
 					subStr = "FALSE";
 				else
 					subStr = "UNKNOWN";
@@ -692,18 +692,18 @@ void InstanceTranslator::AddPropertyAssertionsForArrayList(string aggrIndvlName,
 void InstanceTranslator::AddPropertyAssertionForSelectFromString(Individual* indvl, ObjectProperty* objProp, string attrIndvlName, string str)
 {
 	// remove null at the end
-	if (StrUtil::EndsWith(str, string(1, '\0')))
+	if (StrUtil::EndWith(str, string(1, '\0')))
 		str = StrUtil::RemoveCharacter(str, string(1, '\0'));
 
-	if (StrUtil::StartsWith(str, "#")
-		&& !StrUtil::IsExisting(str, "(")
-		&& !StrUtil::IsExisting(str, ")")) // instance
+	if (StrUtil::StartWith(str, "#")
+		&& !StrUtil::Exist(str, "(")
+		&& !StrUtil::Exist(str, ")")) // instance
 	{
 		str = "i" + StrUtil::RemoveCharacter(str, "#");
 		AddObjectPropertyAssertion(indvl, objProp, str);
 	}
-	else if (StrUtil::IsExisting(str, "(")
-		&& StrUtil::IsExisting(str, ")"))
+	else if (StrUtil::Exist(str, "(")
+		&& StrUtil::Exist(str, ")"))
 	{
 		int leftParenLoc = str.find("(");
 
@@ -716,14 +716,14 @@ void InstanceTranslator::AddPropertyAssertionForSelectFromString(Individual* ind
 
 		string annoStr = cls->GetAnnotationAt(0).second;
 
-		if (StrUtil::Equals(annoStr, "enumerationtype"))
+		if (StrUtil::Equal(annoStr, "enumerationtype"))
 		{
 			typeValue = StrUtil::GetStringBetween(typeValue, ".", ".");
 			typeValue = StrUtil::ToLower(typeValue);
 
 			AddObjectPropertyAssertion(indvl, objProp, typeValue);
 		}
-		else if (StrUtil::Equals(annoStr, "datatype"))
+		else if (StrUtil::Equal(annoStr, "datatype"))
 		{
 			// find a superclass that is of datatype
 			for (int i = 0; i < cls->GetSuperClassSize(); ++i)
@@ -731,10 +731,10 @@ void InstanceTranslator::AddPropertyAssertionForSelectFromString(Individual* ind
 				Class* supCls = cls->GetSuperClassAt(i);
 				string superAnnoStr = supCls->GetAnnotationAt(0).second;
 
-				if (StrUtil::Equals(supCls->GetName(), "attribute"))
+				if (StrUtil::Equal(supCls->GetName(), "attribute"))
 					break;
 
-				if (!StrUtil::Equals(annoStr, superAnnoStr))
+				if (!StrUtil::Equal(annoStr, superAnnoStr))
 					continue;
 
 				cls = supCls;
@@ -744,37 +744,37 @@ void InstanceTranslator::AddPropertyAssertionForSelectFromString(Individual* ind
 			string clsName = cls->GetName();
 
 			// check datatype
-			if (StrUtil::Equals(clsName, "real")
-				|| StrUtil::Equals(clsName, "number"))
+			if (StrUtil::Equal(clsName, "real")
+				|| StrUtil::Equal(clsName, "number"))
 			{
 				AddObjectPropertyAssertion(indvl, objProp, attrIndvlName);
 				AddDataPropertyAssertion(m_ontology->GetIndividualByName(attrIndvlName), typeName, "to_decimal", typeValue);
 			}
-			else if (StrUtil::Equals(clsName, "integer"))
+			else if (StrUtil::Equal(clsName, "integer"))
 			{
 				AddObjectPropertyAssertion(indvl, objProp, attrIndvlName);
 				AddDataPropertyAssertion(m_ontology->GetIndividualByName(attrIndvlName), typeName, "to_integer", typeValue);
 			}
-			else if (StrUtil::Equals(clsName, "string"))
+			else if (StrUtil::Equal(clsName, "string"))
 			{
 				AddObjectPropertyAssertion(indvl, objProp, attrIndvlName);
 				AddDataPropertyAssertion(m_ontology->GetIndividualByName(attrIndvlName), typeName, "to_string", typeValue);
 			}
-			else if (StrUtil::Equals(clsName, "binary"))
+			else if (StrUtil::Equal(clsName, "binary"))
 			{
 				AddObjectPropertyAssertion(indvl, objProp, attrIndvlName);
 				AddDataPropertyAssertion(m_ontology->GetIndividualByName(attrIndvlName), typeName, "to_binary", typeValue);
 			}
-			else if (StrUtil::Equals(clsName, "boolean"))
+			else if (StrUtil::Equal(clsName, "boolean"))
 			{
 				AddObjectPropertyAssertion(indvl, objProp, attrIndvlName);
 				AddDataPropertyAssertion(m_ontology->GetIndividualByName(attrIndvlName), typeName, "to_boolean", typeValue);
 			}
-			else if (StrUtil::Equals(clsName, "logical"))
+			else if (StrUtil::Equal(clsName, "logical"))
 			{
-				if (StrUtil::IsExisting(typeValue, "T"))
+				if (StrUtil::Exist(typeValue, "T"))
 					typeValue = "TRUE";
-				else if (StrUtil::IsExisting(typeValue, "F"))
+				else if (StrUtil::Exist(typeValue, "F"))
 					typeValue = "FALSE";
 				else
 					typeValue = "UNKNOWN";
@@ -833,7 +833,7 @@ void InstanceTranslator::AddPropertyAssertionsForCoordinatesList(Individual* ind
 		aggrIndvl->AddClassType(m_ontology->GetClassByName(aggrClassName));
 
 		string subStr = subStrs[i];
-		if (StrUtil::IsExisting(subStr, "\n"))
+		if (StrUtil::Exist(subStr, "\n"))
 			int a = 0;
 
 		string attrIndvlName = aggrIndvl->GetName() + "_value";

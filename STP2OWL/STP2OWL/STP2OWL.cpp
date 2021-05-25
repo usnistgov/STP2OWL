@@ -6,11 +6,11 @@
 #include "StopWatch.h"
 
 // Print out the usage
-void PrintUsage(string exe, S2O_Option* opt)
+void PrintUsage(string exe, S2O_Option& opt)
 {
 	cout << endl;
 	cout << "////////////////////////////////////////////////" << endl;
-	cout << "//  NIST STEP to OWL Translator(STP2OWL) " << opt->Version() << "  //" << endl;
+	cout << "//  NIST STEP to OWL Translator(STP2OWL) " << opt.Version() << "  //" << endl;
 	cout << "////////////////////////////////////////////////" << endl;
 	cout << endl;
 	cout << "[Usage]" << endl;
@@ -21,8 +21,8 @@ void PrintUsage(string exe, S2O_Option* opt)
 	cout << " --schema     STEP schema (Input:203,203e2,210e2,210e3,214e3,219,227,235,238,239,240,242,242e2,IFC2X3,IFC4,ISO15926,PDM)" << endl;
 	cout << "              The schema of the input STEP file always precedes over this option." << endl;
 	cout << " --profile    OWL 2 profile (Input:DL,EL,QL,RL) default=DL" << endl;
-	cout << " --mode       Output mode (0:separated(schema,instance),1:instance,2:schema,3:integrated) default=" << (int)opt->Mode() << endl;
-	cout << " --simgeom    Simplified geometry representation (1:yes,0:no) default=" << opt->IsSimpleGeomtry() << endl;
+	cout << " --mode       Output mode (0:separated(schema,instance),1:instance,2:schema,3:integrated) default=" << (int)opt.Mode() << endl;
+	cout << " --simgeom    Simplified geometry representation (1:yes,0:no) default=" << opt.IsSimpleGeomtry() << endl;
 	cout << " --filter     CSV file path for STEP entity names to be kept in the OWL instances" << endl;
 	cout << endl;
 	cout << "[Examples]" << endl;
@@ -53,7 +53,7 @@ void PrintUsage(string exe, S2O_Option* opt)
 }
 
 // Set option values
-bool SetOption(int argc, char* argv[], S2O_Option* opt)
+bool SetOption(int argc, char* argv[], S2O_Option& opt)
 {
 	// Print out usage
 	if (argc < 2)
@@ -95,16 +95,16 @@ bool SetOption(int argc, char* argv[], S2O_Option* opt)
 				if (token == "--input")
 				{
 					inputFlag = true;
-					opt->SetInput(token1);
+					opt.SetInput(token1);
 				}
 				else if (token == "--schema")
 				{
-					opt->SetSchema(token1);
+					opt.SetSchema(token1);
 				}
 				else if (token == "--mode")
 				{
 					int mode = stoi(token1);
-					opt->SetMode(mode);
+					opt.SetMode(mode);
 
 					if (mode != 0
 						&& mode != 1
@@ -118,7 +118,7 @@ bool SetOption(int argc, char* argv[], S2O_Option* opt)
 				else if (token == "--simgeom")
 				{
 					int simgeom = stoi(token1);
-					opt->SetSimpleGeometry(simgeom);
+					opt.SetSimpleGeometry(simgeom);
 
 					if (simgeom != 0
 						&& simgeom != 1)
@@ -129,7 +129,7 @@ bool SetOption(int argc, char* argv[], S2O_Option* opt)
 				}
 				else if (token == "--profile")
 				{
-					opt->SetOWL2Profile(token1);
+					opt.SetOWL2Profile(token1);
 
 					if (token1 != "DL"
 						&& token1 != "EL"
@@ -142,7 +142,7 @@ bool SetOption(int argc, char* argv[], S2O_Option* opt)
 				}
 				else if (token == "--filter")
 				{
-					opt->SetKeepClassList(token1);
+					opt.SetKeepClassList(token1);
 				}
 
 				++i;
@@ -151,8 +151,8 @@ bool SetOption(int argc, char* argv[], S2O_Option* opt)
 	}
 
 	// Check input path
-	if (opt->Input().empty()
-		&& opt->Schema().empty())
+	if (opt.Input().empty()
+		&& opt.Schema().empty())
 	{
 		cout << "Please input a STEP file or a schema." << endl;
 		return false;
@@ -168,38 +168,24 @@ int main(int argc, char* argv[])
 	int status = -1; // Translation status
 
 #if _DEBUG
-	opt.SetInput("C:\\Users\\User\\Desktop\\TestCases\\test.step");
+	opt.SetInput("C:\\Users\\User\\Desktop\\Box.stp");
 	opt.SetMode(0);
 	opt.SetOWL2Profile("QL");
 	opt.SetSimpleGeometry(1);
 	opt.SetSchema("242");
 #else
-	if (!SetOption(argc, argv, &opt))
+	if (!SetOption(argc, argv, opt))
 		return status;
 #endif
 
-	SchemaChecker* schemaChecker = new SchemaChecker();
-
-	if (opt.Input().empty())
-	{
-		schemaChecker->SetShortName(opt.Schema());
-		opt.SetMode(2);
-		opt.SetInput(opt.Schema());
-	}
-	else
-	{
-		schemaChecker->SetSTEPFilePath(opt.Input());
-	}
-	
 	Registry* reg = nullptr;
-	const Schema* sc = schemaChecker->InitializeSchema(reg);
-
-	cout << endl;
-	cout << "[Schema: " << schemaChecker->GetLongName();
-	cout << " (" << schemaChecker->GetShortName() << ")" << "]" << endl << endl;
-
+	const Schema* sc = nullptr;
 	InstMgr* instList = new InstMgr();
-	STP2ONT* s2o = new STP2ONT(schemaChecker->GetLongName());
+	
+	SchemaChecker schemaChecker;
+
+	if (!schemaChecker.InitializeSchema(reg, opt))
+		return status;
 
 	try
 	{
@@ -207,8 +193,11 @@ int main(int argc, char* argv[])
 		sw.Start();
 
 		sw.Lap();
+		
+		STP2ONT s2o(schemaChecker.GetLongName());
 
-		s2o->TranslateSchema(sc, &opt);
+		sc = reg->FindSchema(s2o.GetName().c_str());
+		s2o.TranslateSchema(sc, opt);
 
 		cout << "STEP Schema to Ontology translation completed!" << endl;
 
@@ -217,6 +206,7 @@ int main(int argc, char* argv[])
 		if (opt.Mode() != OutputMode::Schema_Only)
 		{
 			STEPfile sfile(*reg, *instList, "", false);
+
 			sfile.ReadExchangeFile(opt.Input());
 
 			// if there's an error, exit (e.g. wrong file path)
@@ -225,7 +215,7 @@ int main(int argc, char* argv[])
 
 			S2OThrowExceptionIf<S2OException>(sfile.Error().severity() < Severity::SEVERITY_WARNING, "Fatal error! Translaton aborted.");
 
-			s2o->TranslateInstances(instList, &opt);
+			s2o.TranslateInstances(instList, opt);
 
 			cout << "STEP Instances to Ontology translation completed!" << endl;
 
@@ -241,16 +231,16 @@ int main(int argc, char* argv[])
 		sw.End();
 
 		sw.ReportTotal();
+
+		status = 0;
 	}
 	catch (S2OException& e)
 	{
 		cout << e.GetMessage() << endl;
 	}
 
-	delete s2o;
 	delete instList;
 	delete reg;
-	delete schemaChecker;
 
 	return status;
 }

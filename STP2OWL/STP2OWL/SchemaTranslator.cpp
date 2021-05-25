@@ -10,9 +10,9 @@
 #include "AnnotationProperty.h"
 
 
-SchemaTranslator::SchemaTranslator(const Schema* schema, Ontology* ontology)
-	:m_ontology(ontology),
-	m_schema(schema),
+SchemaTranslator::SchemaTranslator(const Schema*& schema, Ontology* ontology)
+	:m_schema(schema), 
+	m_ontology(ontology),
 	m_abstractClassCount(0)
 {
 }
@@ -21,7 +21,7 @@ SchemaTranslator::~SchemaTranslator()
 {
 }
 
-void SchemaTranslator::Translate(S2O_Option* opt)
+void SchemaTranslator::Translate(S2O_Option& opt)
 {
 	AddDataTypes();
 	AddAnnotationProperties();
@@ -35,9 +35,9 @@ void SchemaTranslator::Translate(S2O_Option* opt)
 	AddClassesForBaseTypes();
 	AddClassesForTypes(tDesList);
 
-	AddDataProperties(opt->Profile());
+	AddDataProperties(opt.Profile());
 
-	if (opt->IsSimpleGeomtry())
+	if (opt.IsSimpleGeomtry())
 		AddDataPropertiesForXYZ();
 }
 
@@ -153,7 +153,7 @@ void SchemaTranslator::AddObjPropertiesForInverseAttributes(Class* eClass, const
 			for (int j = 0; j < invCls->GetObjectPropertySize(); ++j)
 			{
 				// Add inverse object property. Note that redefined objProps cannot be added to be inverse.
-				if (StrUtil::Equals(invObjPropName, invCls->GetObjectPropertyAt(j)->GetName()))
+				if (StrUtil::Equal(invObjPropName, invCls->GetObjectPropertyAt(j)->GetName()))
 				{
 					ObjectProperty* objProp = m_ontology->GetObjectPropertyByName(objPropName);
 					ObjectProperty* invObjProp = m_ontology->GetObjectPropertyByName(invObjPropName);
@@ -330,7 +330,7 @@ void SchemaTranslator::AddSubClassesFromSupertypeStatement(const EntityDescripto
 
 			string superTypeStmt = eDes->Supertype_Stmt();
 
-			if (!StrUtil::IsExisting(superTypeStmt, "SUPERTYPE OF"))
+			if (!StrUtil::Exist(superTypeStmt, "SUPERTYPE OF"))
 			{
 				eDesLinkNode = (EntityDescLinkNode*)eDesLinkNode->NextNode();
 				continue;
@@ -339,9 +339,9 @@ void SchemaTranslator::AddSubClassesFromSupertypeStatement(const EntityDescripto
 			superTypeStmt = StrUtil::RemoveCharacter(superTypeStmt, "\n");
 			superTypeStmt = StrUtil::GetStringBetween(superTypeStmt, "SUPERTYPE OF ( ", ")");
 
-			if (StrUtil::IsExisting(superTypeStmt, "ONEOF")
-				|| StrUtil::IsExisting(superTypeStmt, "AND ")
-				|| StrUtil::IsExisting(superTypeStmt, "ANDOR "))
+			if (StrUtil::Exist(superTypeStmt, "ONEOF")
+				|| StrUtil::Exist(superTypeStmt, "AND ")
+				|| StrUtil::Exist(superTypeStmt, "ANDOR "))
 			{
 				AddSubClassesFromONEOForANDorANDOR(superTypeStmt, eClass);
 			}
@@ -368,7 +368,7 @@ void SchemaTranslator::AddSubClassesFromONEOForANDorANDOR(string str, Class*& su
 	string blank = " ";
 	string comma = ",";
 
-	while (StrUtil::IsExisting(tmp, oneOf))
+	while (StrUtil::Exist(tmp, oneOf))
 	{
 		int oneOfLoc = tmp.find(oneOf);
 		int leftParenLoc = tmp.find(leftParen, oneOfLoc);
@@ -394,8 +394,8 @@ void SchemaTranslator::AddSubClassesFromONEOForANDorANDOR(string str, Class*& su
 	{
 		string subClassName = subClassNames[i];
 
-		if (StrUtil::IsExisting(subClassName, "AND ")
-			|| StrUtil::IsExisting(subClassName, "ANDOR "))
+		if (StrUtil::Exist(subClassName, "AND ")
+			|| StrUtil::Exist(subClassName, "ANDOR "))
 		{
 			Class* absCls = nullptr;
 			m_ontology->AddClass(GetAbstractClassName(), absCls);
@@ -448,13 +448,13 @@ void SchemaTranslator::AddSubClassesFromANDorANDOR(string str, Class*& superclas
 	string sep; // separator
 
 	// no AP has a statement with both AND and ANDOR.
-	if (StrUtil::IsExisting(str, AND))
+	if (StrUtil::Exist(str, AND))
 		sep = AND;
-	else if (StrUtil::IsExisting(str, ANDOR))
+	else if (StrUtil::Exist(str, ANDOR))
 		sep = ANDOR;
 
-	while (StrUtil::IsExisting(tmp, leftParen)
-		&& StrUtil::IsExisting(tmp, rightParen))
+	while (StrUtil::Exist(tmp, leftParen)
+		&& StrUtil::Exist(tmp, rightParen))
 	{
 		int sepLoc = tmp.find(sep);
 		int leftParenLoc = -1;
@@ -466,9 +466,9 @@ void SchemaTranslator::AddSubClassesFromANDorANDOR(string str, Class*& superclas
 		{
 			string ch(1, tmp.at(i));
 
-			if (StrUtil::Equals(ch, leftParen))
+			if (StrUtil::Equal(ch, leftParen))
 				flag++;
-			else if (StrUtil::Equals(ch, rightParen))
+			else if (StrUtil::Equal(ch, rightParen))
 				flag--;
 
 			if (flag == 1)
@@ -504,9 +504,9 @@ void SchemaTranslator::AddSubClassesFromANDorANDOR(string str, Class*& superclas
 
 		S2OThrowExceptionIf<S2OException>(cls == nullptr, "Invalid class name: " + subClassName);
 
-		if (StrUtil::Equals(sep, AND))
+		if (StrUtil::Equal(sep, AND))
 			superclass->AddObjectIntersectionOf(cls);
-		else if (StrUtil::Equals(sep, ANDOR))
+		else if (StrUtil::Equal(sep, ANDOR))
 			superclass->AddObjectUnionOf(cls);
 	}
 
@@ -602,7 +602,7 @@ void SchemaTranslator::AddClassesForTypes(const TypeDescriptorList* tDesList)
 				string tSuperClassName = StrUtil::ToLower(tDes->Description());
 
 				// In IFC schemas, there are "string (22) fixed" and "string (255)" that should be changed to "string".
-				if (StrUtil::IsExisting(tSuperClassName, "string ("))
+				if (StrUtil::Exist(tSuperClassName, "string ("))
 					tSuperClassName = "string";
 
 				Class* tSuperClass = nullptr;
@@ -623,7 +623,7 @@ void SchemaTranslator::AddClassesForTypes(const TypeDescriptorList* tDesList)
 				{
 					string enumName = StrUtil::ToLower(enumTypes->get_value_at(j));
 
-					if (StrUtil::Equals(enumName, "unset")) // exp2cxx makes this enum item by default
+					if (StrUtil::Equal(enumName, "unset")) // exp2cxx makes this enum item by default
 						continue;
 
 					Individual* indvl = nullptr;
@@ -832,8 +832,8 @@ void SchemaTranslator::AddClassesObjPropertiesForSetBag(const TypeDescriptor* ag
 	aggrClass->AddObjectProperty(aggrObjProp);
 
 	// if there's no cardinality restriction
-	if (StrUtil::IsExisting(string(aggrTypeDes->Description()), "SET OF")
-		|| StrUtil::IsExisting(string(aggrTypeDes->Description()), "BAG OF"))
+	if (StrUtil::Exist(string(aggrTypeDes->Description()), "SET OF")
+		|| StrUtil::Exist(string(aggrTypeDes->Description()), "BAG OF"))
 	{
 		aggrClass->AddObjectPropertyCardinality(aggrObjProp, MAXCARD, MAXCARD);
 	}

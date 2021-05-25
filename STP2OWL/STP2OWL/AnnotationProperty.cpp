@@ -14,13 +14,13 @@ AnnotationProperty::~AnnotationProperty()
 void AnnotationProperty::AddDomain(Class* domain)
 {
 	assert(domain);
-	m_domains.push_back(domain);
+	m_domains.emplace_back(domain);
 }
 
 void AnnotationProperty::AddRange(DataType* range)
 {
 	assert(range);
-	m_ranges.push_back(range);
+	m_ranges.emplace_back(range);
 }
 
 void AnnotationProperty::Clear()

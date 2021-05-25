@@ -8,10 +8,10 @@ class Individual;
 class InstanceTranslator
 {
 public:
-	InstanceTranslator(InstMgr* instList, Ontology* ontology);
+	InstanceTranslator(InstMgr*& instList, Ontology*& ontology);
 	~InstanceTranslator();
 
-	void Translate(S2O_Option* opt);
+	void Translate(S2O_Option& opt);
 
 protected:
 	void AddIndividualsForInstances();

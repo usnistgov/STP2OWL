@@ -65,8 +65,8 @@ private:
 	vector<DataProperty*> m_dataProperties;
 	vector<Individual*> m_namedIndividuals;
 
-	map<ObjectProperty*, int> m_objPropMinCard, m_objPropMaxCard;
-	map<DataProperty*, int> m_datPropMinCard, m_datPropMaxCard;
+	unordered_map<ObjectProperty*, int> m_objPropMinCard, m_objPropMaxCard;
+	unordered_map<DataProperty*, int> m_datPropMinCard, m_datPropMaxCard;
 
 	vector<Class*> m_equivalentClasses;
 	vector<Class*> m_objectUnionOf;			// ANDOR

@@ -115,7 +115,7 @@ bool S2O_Option::IsOWL2EL(const string& s)
 {
     for (int i = 0; i < (int)m_restrictionEL.size(); ++i)
     {
-        if (StrUtil::IsExisting(s, m_restrictionEL[i]))
+        if (StrUtil::Exist(s, m_restrictionEL[i]))
         {
             return false;
         }
@@ -128,7 +128,7 @@ bool S2O_Option::IsOWL2QL(const string& s)
 {
     for (int i = 0; i < (int)m_restrictionQL.size(); ++i)
     {
-        if (StrUtil::IsExisting(s, m_restrictionQL[i]))
+        if (StrUtil::Exist(s, m_restrictionQL[i]))
         {
             return false;
         }
@@ -141,7 +141,7 @@ bool S2O_Option::IsOWL2RL(const string& s)
 {
     for (int i = 0; i < (int)m_restrictionRL.size(); ++i)
     {
-        if (StrUtil::IsExisting(s, m_restrictionRL[i]))
+        if (StrUtil::Exist(s, m_restrictionRL[i]))
         {
             return false;
         }

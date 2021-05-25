@@ -26,22 +26,18 @@ STP2ONT::~STP2ONT()
 }
 
 
-void STP2ONT::TranslateSchema(const Schema* schema, S2O_Option* opt)
+void STP2ONT::TranslateSchema(const Schema*& schema, S2O_Option& opt)
 {
-	SchemaTranslator* st = new SchemaTranslator(schema, m_ontology);
-	st->Translate(opt);
-
-	delete st;
+	SchemaTranslator st(schema, m_ontology);
+	st.Translate(opt);
 
 	SetSchemaPrefix();
 }
 
-void STP2ONT::TranslateInstances(InstMgr* instList, S2O_Option* opt)
+void STP2ONT::TranslateInstances(InstMgr*& instList, S2O_Option& opt)
 {
-	InstanceTranslator* it = new InstanceTranslator(instList, m_ontology);
-	it->Translate(opt);
-
-	delete it;
+	InstanceTranslator it(instList, m_ontology);
+	it.Translate(opt);
 }
 
 

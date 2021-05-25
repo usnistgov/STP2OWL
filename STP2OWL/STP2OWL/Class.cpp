@@ -14,71 +14,71 @@ Class::~Class()
 void Class::AddSuperClass(Class* superClass)
 {
 	assert(superClass);
-	m_superClasses.push_back(superClass);
+	m_superClasses.emplace_back(superClass);
 }
 
 void Class::AddObjectProperty(ObjectProperty* objectProperty)
 {
 	assert(objectProperty);
-	m_objectProperties.push_back(objectProperty);
+	m_objectProperties.emplace_back(objectProperty);
 }
 
 void Class::AddObjectPropertyCardinality(ObjectProperty* objectProperty, int min, int max)
 {
 	assert(objectProperty);
 	
-	m_objPropMinCard.insert({ objectProperty , min});
-	m_objPropMaxCard.insert({ objectProperty , max });	
+	m_objPropMinCard.emplace(objectProperty, min);
+	m_objPropMaxCard.emplace(objectProperty, max);
 }
 
 void Class::AddDataProperty(DataProperty* dataProperty)
 {
 	assert(dataProperty);
-	m_dataProperties.push_back(dataProperty);
+	m_dataProperties.emplace_back(dataProperty);
 }
 
 void Class::AddDataPropertyCardinality(DataProperty* dataProperty, int min, int max)
 {
 	assert(dataProperty);
 	
-	m_datPropMinCard.insert({ dataProperty , min });
-	m_datPropMaxCard.insert({ dataProperty , max });;
+	m_datPropMinCard.emplace(dataProperty, min);
+	m_datPropMaxCard.emplace(dataProperty, max);
 }
 
 void Class::AddEquivalentClass(Class* cls)
 {
 	assert(cls);
-	m_equivalentClasses.push_back(cls);
+	m_equivalentClasses.emplace_back(cls);
 }
 
 void Class::AddObjectOneOf(Individual* indvl)
 {
 	assert(indvl);
-	m_objectOneOf.push_back(indvl);
+	m_objectOneOf.emplace_back(indvl);
 }
 
 void Class::AddObjectUnionOf(Class* cls)
 {
 	assert(cls);
-	m_objectUnionOf.push_back(cls);
+	m_objectUnionOf.emplace_back(cls);
 }
 
 void Class::AddObjectIntersectionOf(Class* cls)
 {
 	assert(cls);
-	m_objectIntersectionOf.push_back(cls);
+	m_objectIntersectionOf.emplace_back(cls);
 }
 
 void Class::AddDisjointUnionOf(Class* cls)
 {
 	assert(cls);
-	m_disjointUnionOf.push_back(cls);
+	m_disjointUnionOf.emplace_back(cls);
 }
 
 void Class::AddDisjointClass(Class* cls)
 {
 	assert(cls);
-	m_disjointClasses.push_back(cls);
+	m_disjointClasses.emplace_back(cls);
 }
 
 void Class::Clear()

@@ -8,7 +8,7 @@
 #include "DataType.h"
 #include "AnnotationProperty.h"
 
-Ontology::Ontology(string name)
+Ontology::Ontology(const string& name)
 	:Object(name)
 {
 }
@@ -19,7 +19,7 @@ Ontology::~Ontology()
 }
 
 
-void Ontology::AddClass(string name, Class*& cls)
+void Ontology::AddClass(const string& name, Class*& cls)
 {
 	cls = GetClassByName(name);
 	
@@ -28,11 +28,11 @@ void Ontology::AddClass(string name, Class*& cls)
 
 	cls = new Class(name);
 
-	m_classes.insert({ name, cls });
-	m_classesVec.push_back(cls);
+	m_classes.emplace(name, cls);
+	m_classesVec.emplace_back(cls);
 }
 
-void Ontology::AddObjectProperty(string name, ObjectProperty*& objProp)
+void Ontology::AddObjectProperty(const string& name, ObjectProperty*& objProp)
 {
 	objProp = GetObjectPropertyByName(name);
 	
@@ -41,11 +41,11 @@ void Ontology::AddObjectProperty(string name, ObjectProperty*& objProp)
 
 	objProp = new ObjectProperty(name);
 
-	m_objectProperties.insert({ name, objProp });
-	m_objectPropertiesVec.push_back(objProp);
+	m_objectProperties.emplace(name, objProp);
+	m_objectPropertiesVec.emplace_back(objProp);
 }
 
-void Ontology::AddDataProperty(string name, DataProperty*& datProp)
+void Ontology::AddDataProperty(const string& name, DataProperty*& datProp)
 {
 	datProp = GetDataPropertyByName(name);
 
@@ -54,11 +54,11 @@ void Ontology::AddDataProperty(string name, DataProperty*& datProp)
 
 	datProp = new DataProperty(name);
 
-	m_dataProperties.insert({ name, datProp });
-	m_dataPropertiesVec.push_back(datProp);
+	m_dataProperties.emplace(name, datProp);
+	m_dataPropertiesVec.emplace_back(datProp);
 }
 
-void Ontology::AddIndividual(string name, Individual*& indvl)
+void Ontology::AddIndividual(const string& name, Individual*& indvl)
 {
 	indvl = GetIndividualByName(name);
 
@@ -67,11 +67,11 @@ void Ontology::AddIndividual(string name, Individual*& indvl)
 
 	indvl = new Individual(name);
 
-	m_individuals.insert(make_pair( name, indvl ));
-	m_individualsVec.push_back(indvl);
+	m_individuals.emplace(make_pair( name, indvl ));
+	m_individualsVec.emplace_back(indvl);
 }
 
-void Ontology::AddDataType(string name, DataType*& datType)
+void Ontology::AddDataType(const string& name, DataType*& datType)
 {
 	datType = GetDataTypeByName(name);
 
@@ -80,11 +80,11 @@ void Ontology::AddDataType(string name, DataType*& datType)
 
 	datType = new DataType(name);
 
-	m_dataTypes.insert({ name, datType });
-	m_dataTypesVec.push_back(datType);
+	m_dataTypes.emplace(name, datType);
+	m_dataTypesVec.emplace_back(datType);
 }
 
-void Ontology::AddAnnotationProperty(string name, AnnotationProperty*& annoProp)
+void Ontology::AddAnnotationProperty(const string& name, AnnotationProperty*& annoProp)
 {
 	annoProp = GetAnnotationPropertyByName(name);
 
@@ -93,12 +93,12 @@ void Ontology::AddAnnotationProperty(string name, AnnotationProperty*& annoProp)
 
 	annoProp = new AnnotationProperty(name);
 
-	m_annotationProperty.insert({ name, annoProp });
-	m_annotationPropertyVec.push_back(annoProp);
+	m_annotationProperty.emplace(name, annoProp);
+	m_annotationPropertyVec.emplace_back(annoProp);
 }
 
 
-Class* Ontology::GetClassByName(string name)
+Class* Ontology::GetClassByName(const string& name)
 {
 	Class* cls = nullptr;
 	
@@ -108,7 +108,7 @@ Class* Ontology::GetClassByName(string name)
 	return cls;
 }
 
-ObjectProperty* Ontology::GetObjectPropertyByName(string name)
+ObjectProperty* Ontology::GetObjectPropertyByName(const string& name)
 {
 	ObjectProperty* objProp = nullptr;
 
@@ -118,7 +118,7 @@ ObjectProperty* Ontology::GetObjectPropertyByName(string name)
 	return objProp;
 }
 
-DataProperty* Ontology::GetDataPropertyByName(string name)
+DataProperty* Ontology::GetDataPropertyByName(const string& name)
 {
 	DataProperty* datProp = nullptr;
 
@@ -128,7 +128,7 @@ DataProperty* Ontology::GetDataPropertyByName(string name)
 	return datProp;
 }
 
-Individual* Ontology::GetIndividualByName(string name)
+Individual* Ontology::GetIndividualByName(const string& name)
 {
 	Individual* indvl = nullptr;
 
@@ -138,7 +138,7 @@ Individual* Ontology::GetIndividualByName(string name)
 	return indvl;
 }
 
-DataType* Ontology::GetDataTypeByName(string name)
+DataType* Ontology::GetDataTypeByName(const string& name)
 {
 	DataType* datType = nullptr;
 
@@ -148,7 +148,7 @@ DataType* Ontology::GetDataTypeByName(string name)
 	return datType;
 }
 
-AnnotationProperty* Ontology::GetAnnotationPropertyByName(string name)
+AnnotationProperty* Ontology::GetAnnotationPropertyByName(const string& name)
 {
 	AnnotationProperty* annoProp = nullptr;
 

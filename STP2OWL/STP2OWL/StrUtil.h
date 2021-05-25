@@ -28,14 +28,14 @@ public:
 	static void SplitStringByCommaInParentheses(string str, vector<string>& subStrs);
 
 	// Check if the target string is existing.
-	static bool IsExisting(string str, string target);
+	static bool Exist(string str, string target);
 
 	// Check if two strings are equal.
-	static bool Equals(string a, string b);
+	static bool Equal(string a, string b);
 
 	// Check if the string starts with the target string.
-	static bool StartsWith(string str, string target);
+	static bool StartWith(string str, string target);
 
 	// Check if the string ends with the target string.
-	static bool EndsWith(string str, string target);
+	static bool EndWith(string str, string target);
 };
