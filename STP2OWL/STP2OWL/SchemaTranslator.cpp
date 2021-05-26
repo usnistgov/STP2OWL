@@ -1003,7 +1003,7 @@ void SchemaTranslator::AddDataProperties(OWL2Profile owl2Profile)
 	Class* booleanCls = m_ontology->GetClassByName("boolean");
 	to_boolean->AddDomain(booleanCls);
 
-	// Use xsd:string instead of xsd:boolean because DL and RL do not allow xsd:boolean
+	// Use xsd:string instead of xsd:boolean because QL and EL do not allow xsd:boolean
 	if (owl2Profile == OWL2Profile::OWL2_QL
 		|| owl2Profile == OWL2Profile::OWL2_EL)
 		to_boolean->AddRange(m_ontology->GetDataTypeByName("xsd:string"));
