@@ -41,6 +41,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 		for (int i = 0; i < ont->GetClassSize(); ++i)
 		{
 			string name = ont->GetClassAt(i)->GetName();
+
+			if (StrUtil::Exist(name, "abst_"))
+				continue;
+
 			ss_owl << "Declaration(Class(:" << name << "))\n";
 		}
 
@@ -185,8 +189,21 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 		{
 			Class* cls = ont->GetClassAt(i);
 			string name = cls->GetName();
-
-			ss_owl << "# Class: :" << name << " (:" << name << ")\n\n";
+	
+			//////////
+			if (StrUtil::Exist(name, "abst_"))
+			{
+				if (cls->GetEquivalentClassSize() != 0)
+				{
+					ss_owl << GetAbstractSupertypeString(cls, ont);
+					continue;
+				}
+			}
+			else 
+			{
+				ss_owl << "# Class: :" << name << " (:" << name << ")\n\n";
+			}
+			/////////
 
 			int annotationSize = cls->GetAnnotationSize();
 
@@ -205,6 +222,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 
 			if (equivalentClassSize > 0)
 			{
+				// Skip if abstract class
+				if (StrUtil::Exist(cls->GetEquivalentClassAt(0)->GetName(), "abst_"))
+					continue;
+
 				ss_owl << "EquivalentClasses(:" << name;
 
 				for (int j = 0; j < equivalentClassSize; ++j)
@@ -221,6 +242,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 
 			if (objUnionOfSize > 0)
 			{
+				// Skip if abstract class
+				if (StrUtil::Exist(name, "abst_"))
+					continue;
+
 				ss_owl << "EquivalentClasses(:" << name << " ObjectUnionOf(";
 
 				for (int j = 0; j < objUnionOfSize; ++j)
@@ -240,6 +265,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 
 			if (disjointUnionOfSize > 1) // Must be greater than 1.
 			{
+				// Skip if abstract class
+				if (StrUtil::Exist(name, "abst_"))
+					continue;
+				
 				ss_owl << "DisjointUnion(:" << name;
 
 				for (int j = 0; j < disjointUnionOfSize; ++j)
@@ -279,6 +308,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 
 			if (objIntersectionOfSize > 0)
 			{
+				// Skip if abstract class
+				if (StrUtil::Exist(name, "abst_"))
+					continue;
+
 				ss_owl << "EquivalentClasses(:" << name << " ObjectIntersectionOf(";
 
 				for (int j = 0; j < objIntersectionOfSize; ++j)
@@ -298,6 +331,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 
 			if (objOneOfSize > 0)
 			{
+				// Skip if abstract class
+				if (StrUtil::Exist(name, "abst_"))
+					continue;
+
 				ss_owl << "EquivalentClasses(:" << name << " ObjectOneOf(";
 
 				for (int j = 0; j < objOneOfSize; ++j)
@@ -684,4 +721,268 @@ bool OntWriter::IsKeepClass(Individual* indvl, S2O_Option& opt) const
 	}
 
 	return false;
+}
+
+string OntWriter::GetAbstractSupertypeString(Class* cls, Ontology* onto) const
+{
+	stringstream ss_owl;
+	
+	if (cls->GetEquivalentClassSize() == 0)
+		return "";
+
+	string name = cls->GetEquivalentClassAt(0)->GetName();
+	
+	ss_owl << "# Class: :" << name << " (:" << name << ")\n\n";
+
+	int objUnionOfSize = cls->GetObjectUnionOfSize();
+
+	if (objUnionOfSize > 0)
+	{
+		ss_owl << "EquivalentClasses(:" << name << " ObjectUnionOf(";
+
+		for (int j = 0; j < objUnionOfSize; ++j)
+		{
+			string objUnionOfName = cls->GetObjectUnionOfAt(j)->GetName();
+
+			if (StrUtil::Exist(objUnionOfName, "abst_"))
+			{
+				Class* absCls = onto->GetClassByName(objUnionOfName);
+
+				if (absCls->GetDisjointClassSize() > 0)
+				{
+					string tmpStr = "ObjectUnionOf(";
+
+					for (int k = 0; k < absCls->GetDisjointClassSize(); ++k)
+					{
+						string disjClsName = absCls->GetDisjointClassAt(k)->GetName();
+
+						if (k == 0)
+							tmpStr += ":" + disjClsName;
+						else
+							tmpStr += " :" + disjClsName;
+					}
+
+					tmpStr += ")";
+
+					if (j == 0)
+						ss_owl << tmpStr;
+					else
+						ss_owl << " " << tmpStr;
+				}
+				else
+				{
+					cout << "Need to check the source code." << endl;
+				}
+
+				continue;
+			}
+
+			if (j == 0)
+				ss_owl << ":" << objUnionOfName;
+			else
+				ss_owl << " :" << objUnionOfName;
+		}
+
+		ss_owl << "))\n";
+	}
+
+	int disjointUnionOfSize = cls->GetDisjointUnionOfSize();
+
+	if (disjointUnionOfSize > 1) // Must be greater than 1.
+	{
+		ss_owl << "DisjointUnion(:" << name;
+
+		for (int j = 0; j < disjointUnionOfSize; ++j)
+		{
+			string disjUnionOfName = cls->GetDisjointUnionOfAt(j)->GetName();
+
+			if (StrUtil::Exist(disjUnionOfName, "abst_"))
+			{
+				Class* absCls = onto->GetClassByName(disjUnionOfName);
+
+				if (absCls->GetObjectUnionOfSize() > 0)
+				{
+					string tmpStr = "ObjectUnionOf(";
+
+					for (int k = 0; k < absCls->GetObjectUnionOfSize(); ++k)
+					{
+						string objUnionOfName = absCls->GetObjectUnionOfAt(k)->GetName();
+
+						if (k == 0)
+							tmpStr += ":" + objUnionOfName;
+						else
+							tmpStr += " :" + objUnionOfName;
+					}
+
+					tmpStr += ")";
+
+					ss_owl << " " << tmpStr;
+				}
+				else if (absCls->GetObjectIntersectionOfSize() > 0)
+				{
+					string tmpStr = "ObjectIntersectionOf(";
+
+					for (int k = 0; k < absCls->GetObjectIntersectionOfSize(); ++k)
+					{
+						string objUnionOfName = absCls->GetObjectIntersectionOfAt(k)->GetName();
+
+						if (k == 0)
+							tmpStr += ":" + objUnionOfName;
+						else
+							tmpStr += " :" + objUnionOfName;
+					}
+
+					tmpStr += ")";
+
+					ss_owl << " " << tmpStr;
+				}
+
+				continue;
+			}
+
+			ss_owl << " :" << disjUnionOfName;
+		}
+
+		ss_owl << ")\n";
+	}
+	else if (disjointUnionOfSize == 1)
+	{
+		//fprintf_s(f, "EquivalentClasses(:%s :%s)\n", name.c_str(), cls->GetDisjointUnionOfAt(0)->GetName().c_str());
+	}
+
+	int disjointClassSize = cls->GetDisjointClassSize();
+
+	if (disjointClassSize > 0)
+	{
+		ss_owl << "DisjointClasses(";
+
+		for (int j = 0; j < disjointClassSize; ++j)
+		{
+			string disjClassName = cls->GetDisjointClassAt(j)->GetName();
+
+			if (StrUtil::Exist(disjClassName, "abst_"))
+			{
+				Class* absCls = onto->GetClassByName(disjClassName);
+
+				if (absCls->GetObjectUnionOfSize() > 0)
+				{
+					string tmpStr = "ObjectUnionOf(";
+
+					for (int k = 0; k < absCls->GetObjectUnionOfSize(); ++k)
+					{
+						string objUnionOfName = absCls->GetObjectUnionOfAt(k)->GetName();
+
+						if (k == 0)
+							tmpStr += ":" + objUnionOfName;
+						else
+							tmpStr += " :" + objUnionOfName;
+					}
+
+					tmpStr += ")";
+
+					ss_owl << " " << tmpStr;
+				}
+				else if (absCls->GetObjectIntersectionOfSize() > 0)
+				{
+					string tmpStr = "ObjectIntersectionOf(";
+
+					for (int k = 0; k < absCls->GetObjectIntersectionOfSize(); ++k)
+					{
+						string objUnionOfName = absCls->GetObjectIntersectionOfAt(k)->GetName();
+
+						if (k == 0)
+							tmpStr += ":" + objUnionOfName;
+						else
+							tmpStr += " :" + objUnionOfName;
+					}
+
+					tmpStr += ")";
+
+					if (j == 0)
+						ss_owl << tmpStr;
+					else
+						ss_owl << " " << tmpStr;
+				}
+
+				continue;
+			}
+
+			if (j == 0)
+				ss_owl << ":" << disjClassName;
+			else
+				ss_owl << " :" << disjClassName;
+		}
+
+		ss_owl << ")\n";
+	}
+
+	int objIntersectionOfSize = cls->GetObjectIntersectionOfSize();
+
+	if (objIntersectionOfSize > 0)
+	{
+		ss_owl << "EquivalentClasses(:" << name << " ObjectIntersectionOf(";
+
+		for (int j = 0; j < objIntersectionOfSize; ++j)
+		{
+			string objIntersectionOfName = cls->GetObjectIntersectionOfAt(j)->GetName();
+
+			if (StrUtil::Exist(objIntersectionOfName, "abst_"))
+			{
+				Class* absCls = onto->GetClassByName(objIntersectionOfName);
+
+				string tmpStr = "ObjectUnionOf(";
+
+				for (int k = 0; k < absCls->GetDisjointClassSize(); ++k)
+				{
+					string disjClsName = absCls->GetDisjointClassAt(k)->GetName();
+
+					if (k == 0)
+						tmpStr += ":" + disjClsName;
+					else
+						tmpStr += " :" + disjClsName;
+				}
+
+				tmpStr += ")";
+
+				if (j == 0)
+					ss_owl << tmpStr;
+				else
+					ss_owl << " " << tmpStr;
+
+				continue;
+			}
+
+			if (j == 0)
+				ss_owl << ":" << objIntersectionOfName;
+			else
+				ss_owl << " :" << objIntersectionOfName;
+		}
+
+		ss_owl << "))\n";
+	}
+
+	int objOneOfSize = cls->GetObjectOneOfSize();
+
+	if (objOneOfSize > 0)
+	{
+		ss_owl << "EquivalentClasses(:" << name << " ObjectOneOf(";
+
+		for (int j = 0; j < objOneOfSize; ++j)
+		{
+			string objOneOfName = cls->GetObjectOneOfAt(j)->GetName();
+
+			if (j == 0)
+				ss_owl << ":" << objOneOfName;
+			else
+				ss_owl << " :" << objOneOfName;
+		}
+
+		ss_owl << "))\n";
+	}
+
+	ss_owl << "\n";
+
+	string str = ss_owl.str();
+
+	return str;
 }

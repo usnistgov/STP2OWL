@@ -37,7 +37,7 @@ protected:
 	void AddAnnotationProperties() const;
 	void AddAnnotation(Object* obj, string annoPropName, string annoStr) const;
 
-	string GetAbstractClassName() { return "abs_" + to_string(GetAbstractClassCount()); }
+	string GetAbstractClassName() { return "abst_" + to_string(GetAbstractClassCount()); }
 	int GetAbstractClassCount() { return m_abstractClassCount++; }
 
 protected:

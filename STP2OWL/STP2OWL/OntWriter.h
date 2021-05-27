@@ -3,6 +3,7 @@
 class STP2ONT;
 class Individual;
 class Ontology;
+class Class;
 
 class OntWriter 
 {
@@ -12,4 +13,5 @@ public:
 protected:
 	void ApplyOWL2Profile(stringstream& ss_owl, S2O_Option& opt) const;
 	bool IsKeepClass(Individual* indvl, S2O_Option& opt) const;
+	string GetAbstractSupertypeString(Class* cls, Ontology* onto) const;
 };
