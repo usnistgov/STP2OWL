@@ -94,8 +94,6 @@ void InstanceTranslator::AddPropertyAssertions(Individual* indvl, SDAI_Applicati
 	if (attrCnt == 0)
 		return;
 
-	//string entName = StrUtil::ToLower(inst->EntityName());
-
 	map<STEPattribute*, int> redefAttrs;
 
 	for (int i = 0; i < attrCnt; ++i)
@@ -103,7 +101,7 @@ void InstanceTranslator::AddPropertyAssertions(Individual* indvl, SDAI_Applicati
 		try
 		{
 			STEPattribute* attr = &attrList.operator[](i);
-			S2OThrowExceptionIf<S2OException>(attr == nullptr, "Null attribute: " + to_string(inst->StepFileId()));
+			S2OThrowExceptionIf<S2OException>(attr == nullptr, "Null attribute: i" + to_string(inst->StepFileId()));
 
 			STEPattribute* redefAttr = attr->RedefiningAttr();	// redefined attribute
 
@@ -173,7 +171,7 @@ void InstanceTranslator::AddPropertyAssertions(Individual* indvl, SDAI_Applicati
 					}
 
 					AddPropertyAssertionsForArrayList(attrIndvlName, attrStr, attrDomTypeDes, aggrName);
-					attrIndvlName = attrIndvlName + "_1"; // for the sake of list and array
+					attrIndvlName += "_1"; // for the sake of list and array
 				}
 
 				AddObjectPropertyAssertion(indvl, objProp, attrIndvlName);
