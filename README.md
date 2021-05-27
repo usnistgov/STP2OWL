@@ -25,6 +25,7 @@ The NIST STEP to OWL Translator (STP2OWL) is an open-source software, and an imp
 ## Contact Information
 - Soonjo Kwon, soonjo.kwon@kumoh.ac.kr
 - William Z. Bernstein, william.bernstein@nist.gov
+- Laetitia V. Monnier, lve.monnier@gmail.com
 
 ## Version
 1.0
