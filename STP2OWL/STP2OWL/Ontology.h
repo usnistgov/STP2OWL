@@ -16,46 +16,46 @@ public:
 	~Ontology();
 
 	void AddClass(const string& name, Class*& cls);
-	Class* GetClassByName(const string& name);
-	int GetClassSize() { return (int)m_classes.size(); }
-	Class* GetClassAt(const int& index) { return m_classesVec[index]; }
+	const int GetClassSize() const { return (int)m_classesMap.size(); }
+	Class* GetClassByName(const string& name) const;
+	Class* GetClassAt(const int& index) const { return m_classesVec[index]; }
 
 	void AddObjectProperty(const string& name, ObjectProperty*& objProp);
-	ObjectProperty* GetObjectPropertyByName(const string& name);
-	int GetObjectPropertySize() { return (int)m_objectProperties.size(); }
-	ObjectProperty* GetObjectPropertyAt(const int& index) { return m_objectPropertiesVec[index]; }
+	const int GetObjectPropertySize() const { return (int)m_objectPropertiesMap.size(); }
+	ObjectProperty* GetObjectPropertyByName(const string& name) const;
+	ObjectProperty* GetObjectPropertyAt(const int& index) const { return m_objectPropertiesVec[index]; }
 
 	void AddDataProperty(const string& name, DataProperty*& datProp);
-	DataProperty* GetDataPropertyByName(const string& name);
-	int GetDataPropertySize() { return (int)m_dataProperties.size(); }
-	DataProperty* GetDataPropertyAt(const int& index) { return m_dataPropertiesVec[index]; }
+	const int GetDataPropertySize() const { return (int)m_dataPropertiesMap.size(); }
+	DataProperty* GetDataPropertyByName(const string& name) const;
+	DataProperty* GetDataPropertyAt(const int& index) const { return m_dataPropertiesVec[index]; }
 
 	void AddIndividual(const string& name, Individual*& indvl);
-	Individual* GetIndividualByName(const string& name);
-	int GetIndividualSize() { return (int)m_individuals.size(); }
-	Individual* GetIndividualAt(const int& index) { return m_individualsVec[index]; }
+	const int GetIndividualSize() const { return (int)m_individualsMap.size(); }
+	Individual* GetIndividualByName(const string& name) const;
+	Individual* GetIndividualAt(const int& index) const { return m_individualsVec[index]; }
 
 	void AddDataType(const string& name, DataType*& datType);
-	DataType* GetDataTypeByName(const string& name);
-	int GetDataTypeSize() { return (int)m_dataTypes.size(); }
-	DataType* GetDataTypeAt(const int& index) { return m_dataTypesVec[index]; }
+	const int GetDataTypeSize() const { return (int)m_dataTypesMap.size(); }
+	DataType* GetDataTypeByName(const string& name) const;
+	DataType* GetDataTypeAt(const int& index) const { return m_dataTypesVec[index]; }
 
 	void AddAnnotationProperty(const string& name, AnnotationProperty*& annoProp);
-	AnnotationProperty* GetAnnotationPropertyByName(const string& name);
-	int GetAnnotationPropertySize() { return (int)m_annotationProperty.size(); }
-	AnnotationProperty* GetAnnotationPropertyAt(const int& index) { return m_annotationPropertyVec[index]; }
+	const int GetAnnotationPropertySize() const { return (int)m_annotationPropertyMap.size(); }
+	AnnotationProperty* GetAnnotationPropertyByName(const string& name) const;
+	AnnotationProperty* GetAnnotationPropertyAt(const int& index) const { return m_annotationPropertyVec[index]; }
 
 protected:
 	void Clear();
 
 private:
 	// for name indexing.
-	unordered_map<string, Class*> m_classes;
-	unordered_map<string, ObjectProperty*> m_objectProperties;
-	unordered_map<string, DataProperty*> m_dataProperties;
-	unordered_map<string, Individual*> m_individuals;
-	unordered_map<string, DataType*> m_dataTypes;
-	unordered_map<string, AnnotationProperty*> m_annotationProperty;
+	unordered_map<string, Class*> m_classesMap;
+	unordered_map<string, ObjectProperty*> m_objectPropertiesMap;
+	unordered_map<string, DataProperty*> m_dataPropertiesMap;
+	unordered_map<string, Individual*> m_individualsMap;
+	unordered_map<string, DataType*> m_dataTypesMap;
+	unordered_map<string, AnnotationProperty*> m_annotationPropertyMap;
 
 	// for number indexing, traverse.
 	vector<Class*> m_classesVec;

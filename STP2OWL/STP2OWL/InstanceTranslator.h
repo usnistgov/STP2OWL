@@ -14,25 +14,25 @@ public:
 	void Translate(S2O_Option& opt);
 
 protected:
-	void AddIndividualsForInstances();
+	void AddIndividualsForInstances() const;
 
-	void AddPropertyAssertions(Individual* indvl, SDAI_Application_instance_ptr inst);
-	void AddPropertyAssertion(Individual* indvl, ObjectProperty* objProp, STEPattribute* attr);
+	void AddPropertyAssertions(Individual* indvl, SDAI_Application_instance_ptr inst) const;
+	void AddPropertyAssertion(Individual* indvl, ObjectProperty* objProp, STEPattribute* attr) const;
 
-	void AddObjectPropertyAssertion(Individual* domainIndvl, ObjectProperty* objProp, string rangeIndvlName);
-	void AddDataPropertyAssertion(Individual* domainIndvl, string domainTypeName, string datPropName, string rangeValue);
+	void AddObjectPropertyAssertion(Individual* domainIndvl, ObjectProperty* objProp, string rangeIndvlName) const;
+	void AddDataPropertyAssertion(Individual* domainIndvl, string domainTypeName, string datPropName, string rangeValue) const;
 
-	void AddPropertyAssertionsForSetBag(string aggrIndvlName, string str, const TypeDescriptor* aggrTypeDes, string& aggrName);
-	void AddPropertyAssertionsForArrayList(string aggrIndvlName, string str, const TypeDescriptor* aggrTypeDes, string& aggrName);
+	void AddPropertyAssertionsForSetBag(string aggrIndvlName, string str, const TypeDescriptor* aggrTypeDes, string& aggrName) const;
+	void AddPropertyAssertionsForArrayList(string aggrIndvlName, string str, const TypeDescriptor* aggrTypeDes, string& aggrName) const;
 
-	void AddPropertyAssertionForSelectFromString(Individual* indvl, ObjectProperty* objProp, string attrIndvlName, string str);
+	void AddPropertyAssertionForSelectFromString(Individual* indvl, ObjectProperty* objProp, string attrIndvlName, string str) const;
 
 protected:
-	void AddDataPropertyAssertionsForCartesianPointAndDirection(Individual* indvl, string str);
-	void AddPropertyAssertionsForCoordinatesList(Individual* indvl, string aggrIndvlName, string str);
+	void AddDataPropertyAssertionsForCartesianPointAndDirection(Individual* indvl, string str) const;
+	void AddPropertyAssertionsForCoordinatesList(Individual* indvl, string aggrIndvlName, string str) const;
 	
 	void InitializeSimpleGeomtryMap(void);
-	bool IsSimpleGeometryTarget(string clsName) { return m_simpleGeometryMap.find(clsName) != m_simpleGeometryMap.end(); }
+	bool IsSimpleGeometryTarget(string clsName) const { return m_simpleGeometryMap.find(clsName) != m_simpleGeometryMap.end(); }
 
 private:
 	Ontology* m_ontology;

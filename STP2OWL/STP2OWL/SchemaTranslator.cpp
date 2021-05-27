@@ -42,7 +42,7 @@ void SchemaTranslator::Translate(S2O_Option& opt)
 }
 
 
-void SchemaTranslator::AddClassesForEntities(const EntityDescriptorList* eDesList)
+void SchemaTranslator::AddClassesForEntities(const EntityDescriptorList* eDesList) const
 {
 	EntityDescLinkNode* eDesLinkNode = (EntityDescLinkNode*)eDesList->GetHead();
 
@@ -112,7 +112,7 @@ void SchemaTranslator::AddClassesForEntities(const EntityDescriptorList* eDesLis
 	}
 }
 
-void SchemaTranslator::AddObjPropertiesForExplicitAttributes(Class* eClass, const AttrDescriptorList* aDesList)
+void SchemaTranslator::AddObjPropertiesForExplicitAttributes(Class* eClass, const AttrDescriptorList* aDesList) const
 {
 	AttrDescLinkNode* aDesLinkNode = (AttrDescLinkNode*)aDesList->GetHead();
 	int attrCnt = aDesList->EntryCount();
@@ -127,7 +127,7 @@ void SchemaTranslator::AddObjPropertiesForExplicitAttributes(Class* eClass, cons
 	}
 }
 
-void SchemaTranslator::AddObjPropertiesForInverseAttributes(Class* eClass, const Inverse_attributeList* invAttrList)
+void SchemaTranslator::AddObjPropertiesForInverseAttributes(Class* eClass, const Inverse_attributeList* invAttrList) const
 {
 	Inverse_attributeLinkNode* invAttrLinkNode = (Inverse_attributeLinkNode*)invAttrList->GetHead();
 	int invAttrCnt = invAttrList->EntryCount();
@@ -172,7 +172,7 @@ void SchemaTranslator::AddObjPropertiesForInverseAttributes(Class* eClass, const
 	}
 }
 
-void SchemaTranslator::AddObjPropertyForAttribute(Class* eClass, const AttrDescriptor* aDes)
+void SchemaTranslator::AddObjPropertyForAttribute(Class* eClass, const AttrDescriptor* aDes) const
 {
 	string aName = aDes->Name();
 	string aObjPropName = eClass->GetName() + "_has_" + aName;
@@ -257,7 +257,7 @@ void SchemaTranslator::AddObjPropertyForAttribute(Class* eClass, const AttrDescr
 }
 
 
-void SchemaTranslator::AddSuperClassesForEntities(const EntityDescriptorList* eDesList)
+void SchemaTranslator::AddSuperClassesForEntities(const EntityDescriptorList* eDesList) const
 {
 	EntityDescLinkNode* eDesLinkNode = (EntityDescLinkNode*)eDesList->GetHead();
 
@@ -370,8 +370,8 @@ void SchemaTranslator::AddSubClassesFromONEOForANDorANDOR(string str, Class*& su
 
 	while (StrUtil::Exist(tmp, oneOf))
 	{
-		int oneOfLoc = tmp.find(oneOf);
-		int leftParenLoc = tmp.find(leftParen, oneOfLoc);
+		int oneOfLoc = static_cast<int>(tmp.find(oneOf));
+		int leftParenLoc = static_cast<int>(tmp.find(leftParen, oneOfLoc));
 
 		string oneOfStmt = StrUtil::GetStringBetweenParenthesis(tmp, leftParenLoc);
 
@@ -456,7 +456,7 @@ void SchemaTranslator::AddSubClassesFromANDorANDOR(string str, Class*& superclas
 	while (StrUtil::Exist(tmp, leftParen)
 		&& StrUtil::Exist(tmp, rightParen))
 	{
-		int sepLoc = tmp.find(sep);
+		int sepLoc = static_cast<int>(tmp.find(sep));
 		int leftParenLoc = -1;
 
 		int flag = 0;
@@ -514,7 +514,7 @@ void SchemaTranslator::AddSubClassesFromANDorANDOR(string str, Class*& superclas
 }
 
 
-void SchemaTranslator::AddClassesForBaseTypes()
+void SchemaTranslator::AddClassesForBaseTypes() const
 {
 	Class* attrCls = nullptr;
 	m_ontology->AddClass("attribute", attrCls);
@@ -573,7 +573,7 @@ void SchemaTranslator::AddClassesForBaseTypes()
 	logiCls->AddObjectOneOf(logical_unknown);
 }
 
-void SchemaTranslator::AddClassesForTypes(const TypeDescriptorList* tDesList)
+void SchemaTranslator::AddClassesForTypes(const TypeDescriptorList* tDesList) const
 {
 	TypeDescLinkNode* tDesLinkNode = (TypeDescLinkNode*)tDesList->GetHead();
 	int typeCnt = tDesList->EntryCount();
@@ -768,7 +768,7 @@ void SchemaTranslator::AddClassesForTypes(const TypeDescriptorList* tDesList)
 }
 
 
-void SchemaTranslator::AddClassesObjPropertiesForSetBag(const TypeDescriptor* aggrTypeDes, string& aggrName)
+void SchemaTranslator::AddClassesObjPropertiesForSetBag(const TypeDescriptor* aggrTypeDes, string& aggrName) const
 {
 	string aggrClassName;
 
@@ -852,7 +852,7 @@ void SchemaTranslator::AddClassesObjPropertiesForSetBag(const TypeDescriptor* ag
 		AddAnnotation(aggrClass, "ExpConstruct", "bag");
 }
 
-void SchemaTranslator::AddClassesObjPropertiesForArrayList(const TypeDescriptor* aggrTypeDes, string& aggrName)
+void SchemaTranslator::AddClassesObjPropertiesForArrayList(const TypeDescriptor* aggrTypeDes, string& aggrName) const
 {
 	string aggrClassName;
 	string emptyAggrClassName;
@@ -960,7 +960,7 @@ void SchemaTranslator::AddClassesObjPropertiesForArrayList(const TypeDescriptor*
 		AddAnnotation(aggrClass, "ExpConstruct", "list");
 }
 
-void SchemaTranslator::AddAnnotation(Object* obj, string annoPropName, string annoStr)
+void SchemaTranslator::AddAnnotation(Object* obj, string annoPropName, string annoStr) const
 {
 	Annotation anno;
 	anno.first = m_ontology->GetAnnotationPropertyByName(annoPropName);
@@ -970,7 +970,7 @@ void SchemaTranslator::AddAnnotation(Object* obj, string annoPropName, string an
 }
 
 
-void SchemaTranslator::AddDataTypes()
+void SchemaTranslator::AddDataTypes() const
 {
 	DataType* xsd_binary = nullptr;
 	m_ontology->AddDataType("xsd:hexBinary", xsd_binary);
@@ -988,7 +988,7 @@ void SchemaTranslator::AddDataTypes()
 	m_ontology->AddDataType("xsd:string", xsd_string);
 }
 
-void SchemaTranslator::AddDataProperties(OWL2Profile owl2Profile)
+void SchemaTranslator::AddDataProperties(OWL2Profile owl2Profile) const
 {
 	DataProperty* to_binary = nullptr;
 	m_ontology->AddDataProperty("to_binary", to_binary);
@@ -1042,7 +1042,7 @@ void SchemaTranslator::AddDataProperties(OWL2Profile owl2Profile)
 	stringCls->AddDataPropertyCardinality(to_decimal, 0, 1);
 }
 
-void SchemaTranslator::AddAnnotationProperties()
+void SchemaTranslator::AddAnnotationProperties() const
 {
 	AnnotationProperty* expConstruct = nullptr;
 	m_ontology->AddAnnotationProperty("ExpConstruct", expConstruct);
@@ -1063,7 +1063,7 @@ void SchemaTranslator::AddAnnotationProperties()
 
 
 // For simplified geometry representation
-void SchemaTranslator::AddDataPropertiesForXYZ()
+void SchemaTranslator::AddDataPropertiesForXYZ() const
 {
 	DataProperty* has_x = nullptr;
 	m_ontology->AddDataProperty("has_x", has_x);

@@ -2,7 +2,7 @@
 #include "Individual.h"
 #include "Class.h"
 
-Individual::Individual(string name)
+Individual::Individual(const string& name)
 	:Object(name)
 {
 }
@@ -38,8 +38,13 @@ void Individual::AddDataPropertyAssertion(DataProperty* datProp, string str)
 
 void Individual::Clear()
 {
-	m_classTypes.clear();
 	m_classNameTypeMap.clear();
+
+	m_classTypes.clear();
 	m_objectPropertyAssertions.clear();
 	m_dataPropertyAssertions.clear();
+
+	m_classTypes.shrink_to_fit();
+	m_objectPropertyAssertions.shrink_to_fit();
+	m_dataPropertyAssertions.shrink_to_fit();
 }

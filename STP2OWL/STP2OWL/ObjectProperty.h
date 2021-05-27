@@ -7,45 +7,45 @@ class Class;
 class ObjectProperty : public Object
 {
 public:
-	ObjectProperty(string name);
+	ObjectProperty(const string& name);
 	~ObjectProperty();
 
 	void AddDomain(Class* domain);
-	int GetDomainSize() { return (int)m_domains.size(); }
-	Class* GetDomainAt(int index) { return m_domains[index]; }
+	const int GetDomainSize() const { return (int)m_domains.size(); }
+	Class* GetDomainAt(const int& index) const { return m_domains[index]; }
 
 	void AddRange(Class* range);
-	int GetRangeSize() { return (int)m_ranges.size(); }
-	Class* GetRangeAt(int index) { return m_ranges[index]; }
+	const int GetRangeSize() const { return (int)m_ranges.size(); }
+	Class* GetRangeAt(const int& index) const { return m_ranges[index]; }
 
 	void AddSuperProperty(ObjectProperty* superProperty);
-	int GetSuperPropertySize() { return (int)m_superProperties.size(); }
-	ObjectProperty* GetSuperPropertyAt(int index) { return m_superProperties[index]; }
+	const int GetSuperPropertySize() const { return (int)m_superProperties.size(); }
+	ObjectProperty* GetSuperPropertyAt(const int& index) const { return m_superProperties[index]; }
 	
 	void AddInverseProperty(ObjectProperty* inverseProperty);
-	int GetInversePropertySize() { return (int)m_inverseProperties.size(); }
-	ObjectProperty* GetInversePropertyAt(int index) { return m_inverseProperties[index]; }
+	const int GetInversePropertySize() const { return (int)m_inverseProperties.size(); }
+	ObjectProperty* GetInversePropertyAt(const int& index) const { return m_inverseProperties[index]; }
 
 	void SetFunctional(bool functional) { m_isFunctional = functional; }
-	bool IsFunctional() { return m_isFunctional; }
+	bool IsFunctional() const { return m_isFunctional; }
 	
 	void SetInverseFunctional(bool inverseFunctional) { m_isInverseFunctional = inverseFunctional; }
-	bool IsInverseFunctional() { return m_isInverseFunctional; }
+	bool IsInverseFunctional() const { return m_isInverseFunctional; }
 
 	void SetTransitive(bool transitive) { m_isTransitive = transitive; }
-	bool IsTransitive() { return m_isTransitive; }
+	bool IsTransitive() const { return m_isTransitive; }
 
 	void SetSymmetric(bool symmetric) { m_isSymmetric = symmetric; }
-	bool IsSymmetric() { return m_isSymmetric; }
+	bool IsSymmetric() const { return m_isSymmetric; }
 
 	void SetAsymmetric(bool asymmetric) { m_isAsymmetric = asymmetric; }
-	bool IsAsymmetric() { return m_isAsymmetric; }
+	bool IsAsymmetric() const { return m_isAsymmetric; }
 
 	void SetReflexive(bool reflexive) { m_isReflexive = reflexive; }
-	bool IsReflexive() { return m_isReflexive; }
+	bool IsReflexive() const { return m_isReflexive; }
 
 	void SetIrreflieive(bool irreflieive) { m_isIrreflieive = irreflieive; }
-	bool IsIrreflieive() { return m_isIrreflieive; }
+	bool IsIrreflieive() const { return m_isIrreflieive; }
 
 protected:
 	void Clear();

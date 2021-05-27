@@ -12,7 +12,7 @@
 #include "SchemaTranslator.h"
 #include "InstanceTranslator.h"
 
-STP2ONT::STP2ONT(string name)
+STP2ONT::STP2ONT(const string& name)
 {
 	m_name = StrUtil::ToLower(name);
 	m_ontology = new Ontology(m_name);
@@ -26,7 +26,7 @@ STP2ONT::~STP2ONT()
 }
 
 
-void STP2ONT::TranslateSchema(const Schema*& schema, S2O_Option& opt)
+void STP2ONT::TranslateSchema(const Schema*& schema, S2O_Option& opt) const
 {
 	SchemaTranslator st(schema, m_ontology);
 	st.Translate(opt);
@@ -34,14 +34,14 @@ void STP2ONT::TranslateSchema(const Schema*& schema, S2O_Option& opt)
 	SetSchemaPrefix();
 }
 
-void STP2ONT::TranslateInstances(InstMgr*& instList, S2O_Option& opt)
+void STP2ONT::TranslateInstances(InstMgr*& instances, S2O_Option& opt)
 {
-	InstanceTranslator it(instList, m_ontology);
+	InstanceTranslator it(instances, m_ontology);
 	it.Translate(opt);
 }
 
 
-void STP2ONT::SetSchemaPrefix()
+void STP2ONT::SetSchemaPrefix() const
 {
 	for (int i = 0; i < m_ontology->GetClassSize(); ++i)
 		m_ontology->GetClassAt(i)->SetPrefix(m_schemaPrefix);

@@ -19,19 +19,19 @@ public:
 	void SetShortName(const string& shortName) { m_targetSchemaShortName = shortName; }
 	
 	// Get the short schema name.
-	string GetShortName() { return m_targetSchemaShortName; }
+	const string& GetShortName() const { return m_targetSchemaShortName; }
 	
 	// Get the long schema name.
-	string GetLongName();
+	const string& GetLongName();
 
 protected:
 	void InitSchemaNames();
 	void SetSchemaFromSTEPFile();
 	void GetCurrentNameFromLine(string line);
-	bool HasMatch(string input, string& output);
+	bool HasMatch(string input, string& output) const;
 
 	//void SetShortName(string shortName) { m_targetSchemaShortName = shortName; }
-	string GetCurrentName() { return m_currentSchemaName; }
+	const string& GetCurrentName() const { return m_currentSchemaName; }
 
 private:
 	string m_stpFilePath;

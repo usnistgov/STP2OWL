@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AnnotationProperty.h"
 
-AnnotationProperty::AnnotationProperty(string name)
+AnnotationProperty::AnnotationProperty(const string& name)
 	:Object(name)
 {
 }
@@ -27,4 +27,7 @@ void AnnotationProperty::Clear()
 {
 	m_domains.clear();
 	m_ranges.clear();
+
+	m_domains.shrink_to_fit();
+	m_ranges.shrink_to_fit();
 }

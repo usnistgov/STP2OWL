@@ -28,7 +28,7 @@ void StopWatch::End()
 	ReportTimeElapsed();
 }
 
-void StopWatch::ReportTotal()
+void StopWatch::ReportTotal() const
 {
 	clock_t totalTime = accumulate(laps.begin(), laps.end(), 0);
 	double timeInSec = totalTime / (double)CLOCKS_PER_SEC;

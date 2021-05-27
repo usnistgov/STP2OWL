@@ -9,7 +9,7 @@
 #include "DataType.h"
 #include "AnnotationProperty.h"
 
-void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
+void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 {
 	Ontology* ont = s2o.GetOntology();
 	
@@ -91,7 +91,7 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 			for (int j = 0; j < annotationSize; ++j)
 			{
-				Annotation anno = objProp->GetAnnotationAt(j);
+				const Annotation& anno = objProp->GetAnnotationAt(j);
 				string annoPropName = anno.first->GetName();
 				string annoDataTypeName = anno.first->GetRangeAt(0)->GetName();
 				string annoStr = anno.second;
@@ -192,7 +192,7 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 			for (int j = 0; j < annotationSize; ++j)
 			{
-				Annotation anno = cls->GetAnnotationAt(j);
+				const Annotation& anno = cls->GetAnnotationAt(j);
 				string annoPropName = anno.first->GetName();
 				string annoDataTypeName = anno.first->GetRangeAt(0)->GetName();
 				string annoStr = anno.second;
@@ -432,7 +432,7 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 			for (int j = 0; j < annotationSize; ++j)
 			{
-				Annotation anno = indvl->GetAnnotationAt(j);
+				const Annotation& anno = indvl->GetAnnotationAt(j);
 				string annoPropName = anno.first->GetName();
 				string annoDataTypeName = anno.first->GetRangeAt(0)->GetName();
 				string annoStr = anno.second;
@@ -453,10 +453,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 			for (int j = 0; j < objPropAssertSize; ++j)
 			{
-				ObjPropertyAssertion objPropAss = indvl->GetObjPropertyAssertionAt(j);
+				ObjPropertyAssertion objPropAssert = indvl->GetObjPropertyAssertionAt(j);
 
-				ObjectProperty* objProp = objPropAss.first;
-				Individual* rangeIndvl = objPropAss.second;
+				ObjectProperty* objProp = objPropAssert.first;
+				Individual* rangeIndvl = objPropAssert.second;
 
 				string objPropName = objProp->GetName();
 				string rangeIndvlName = rangeIndvl->GetName();
@@ -467,10 +467,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 			for (int j = 0; j < datPropAssertSize; ++j)
 			{
-				DataPropertyAssertion datPropAss = indvl->GetDataPropertyAssertionAt(j);
+				DataPropertyAssertion datPropAssert = indvl->GetDataPropertyAssertionAt(j);
 
-				DataProperty* datProp = datPropAss.first;
-				string datPropValue = datPropAss.second;
+				DataProperty* datProp = datPropAssert.first;
+				string datPropValue = datPropAssert.second;
 
 				string datPropName = datProp->GetName();
 				string datPropTypeName = datProp->GetRangeAt(0)->GetName();
@@ -567,7 +567,7 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 			for (int j = 0; j < annotationSize; ++j)
 			{
-				Annotation anno = indvl->GetAnnotationAt(j);
+				const Annotation& anno = indvl->GetAnnotationAt(j);
 				string annoPropName = anno.first->GetName();
 				string annoDataTypeName = anno.first->GetRangeAt(0)->GetName();
 				string annoStr = anno.second;
@@ -588,10 +588,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 			for (int j = 0; j < objPropAssertSize; ++j)
 			{
-				ObjPropertyAssertion objPropAss = indvl->GetObjPropertyAssertionAt(j);
+				ObjPropertyAssertion objPropAssert = indvl->GetObjPropertyAssertionAt(j);
 
-				ObjectProperty* objProp = objPropAss.first;
-				Individual* rangeIndvl = objPropAss.second;
+				ObjectProperty* objProp = objPropAssert.first;
+				Individual* rangeIndvl = objPropAssert.second;
 
 				string objPropName = objProp->GetName();
 				string rangeIndvlName = rangeIndvl->GetName();
@@ -604,10 +604,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 			for (int j = 0; j < datPropAssertSize; ++j)
 			{
-				DataPropertyAssertion datPropAss = indvl->GetDataPropertyAssertionAt(j);
+				DataPropertyAssertion datPropAssert = indvl->GetDataPropertyAssertionAt(j);
 
-				DataProperty* datProp = datPropAss.first;
-				string datPropValue = datPropAss.second;
+				DataProperty* datProp = datPropAssert.first;
+				string datPropValue = datPropAssert.second;
 
 				string datPropName = datProp->GetName();
 				string datPropTypeName = datProp->GetRangeAt(0)->GetName();
@@ -641,7 +641,7 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt)
 
 }
 
-void OntWriter::ApplyOWL2Profile(stringstream& ss_owl, S2O_Option& opt)
+void OntWriter::ApplyOWL2Profile(stringstream& ss_owl, S2O_Option& opt) const
 {
 	stringstream ss_owl_mod;
 	
@@ -673,7 +673,7 @@ void OntWriter::ApplyOWL2Profile(stringstream& ss_owl, S2O_Option& opt)
 	ss_owl.str(ss_owl_mod.str());
 }
 
-bool OntWriter::IsKeepClass(Individual* indvl, S2O_Option& opt)
+bool OntWriter::IsKeepClass(Individual* indvl, S2O_Option& opt) const
 {
 	for (int i = 0; i < indvl->GetClassTypeSize(); ++i)
 	{

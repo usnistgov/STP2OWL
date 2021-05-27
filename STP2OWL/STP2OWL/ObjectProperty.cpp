@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ObjectProperty.h"
 
-ObjectProperty::ObjectProperty(string name)
+ObjectProperty::ObjectProperty(const string& name)
 	:Object(name),
 	m_isFunctional(false),
 	m_isInverseFunctional(false),
@@ -46,7 +46,11 @@ void ObjectProperty::Clear()
 {
 	m_domains.clear();
 	m_ranges.clear();
-
 	m_superProperties.clear();
 	m_inverseProperties.clear();
+
+	m_domains.shrink_to_fit();
+	m_ranges.shrink_to_fit();
+	m_superProperties.shrink_to_fit();
+	m_inverseProperties.shrink_to_fit();
 }

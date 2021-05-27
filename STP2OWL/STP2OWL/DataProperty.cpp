@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DataProperty.h"
 
-DataProperty::DataProperty(string name)
+DataProperty::DataProperty(const string& name)
 	:Object(name),
 	m_isFunctional(false)
 {
@@ -28,4 +28,7 @@ void DataProperty::Clear()
 {
 	m_domains.clear();
 	m_ranges.clear();
+
+	m_domains.shrink_to_fit();
+	m_ranges.shrink_to_fit();
 }

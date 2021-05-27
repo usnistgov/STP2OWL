@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DataType.h"
 
-DataType::DataType(string name)
+DataType::DataType(const string& name)
 	:Object(name)
 {
 }

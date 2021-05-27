@@ -8,16 +8,16 @@ class DataType;
 class AnnotationProperty : public Object
 {
 public:
-	AnnotationProperty(string name);
+	AnnotationProperty(const string& name);
 	~AnnotationProperty();
 
 	void AddDomain(Class* domain);
-	int GetDomainSize() { return (int)m_domains.size(); }
-	Class* GetDomainAt(int index) { return m_domains[index]; }
+	const int GetDomainSize() const { return (int)m_domains.size(); }
+	Class* GetDomainAt(const int& index) const { return m_domains[index]; }
 
 	void AddRange(DataType* range);
-	int GetRangeSize() { return (int)m_ranges.size(); }
-	DataType* GetRangeAt(int index) { return m_ranges[index]; }
+	const int GetRangeSize() const { return (int)m_ranges.size(); }
+	DataType* GetRangeAt(const int& index) const { return m_ranges[index]; }
 
 protected:
 	void Clear();

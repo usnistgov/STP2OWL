@@ -28,7 +28,7 @@ void InstanceTranslator::Translate(S2O_Option& opt)
 }
 
 
-void InstanceTranslator::AddIndividualsForInstances()
+void InstanceTranslator::AddIndividualsForInstances() const
 {
 	// instance count
 	int instCnt = m_instList->InstanceCount();
@@ -86,7 +86,7 @@ void InstanceTranslator::AddIndividualsForInstances()
 	}
 }
 
-void InstanceTranslator::AddPropertyAssertions(Individual* indvl, SDAI_Application_instance_ptr inst)
+void InstanceTranslator::AddPropertyAssertions(Individual* indvl, SDAI_Application_instance_ptr inst) const
 {
 	STEPattributeList attrList = inst->attributes;	// attribute list
 	int attrCnt = attrList.EntryCount();			// attribute list count
@@ -103,7 +103,7 @@ void InstanceTranslator::AddPropertyAssertions(Individual* indvl, SDAI_Applicati
 		try
 		{
 			STEPattribute* attr = &attrList.operator[](i);
-			S2OThrowExceptionIf<S2OException>(attr == nullptr, "Null STEP attribute.");
+			S2OThrowExceptionIf<S2OException>(attr == nullptr, "Null attribute: " + to_string(inst->StepFileId()));
 
 			STEPattribute* redefAttr = attr->RedefiningAttr();	// redefined attribute
 
@@ -208,7 +208,7 @@ void InstanceTranslator::AddPropertyAssertions(Individual* indvl, SDAI_Applicati
 	redefAttrs.clear();
 }
 
-void InstanceTranslator::AddPropertyAssertion(Individual* indvl, ObjectProperty* objProp, STEPattribute* attr)
+void InstanceTranslator::AddPropertyAssertion(Individual* indvl, ObjectProperty* objProp, STEPattribute* attr) const
 {
 	BASE_TYPE attrBaseType = attr->BaseType();	// attribute base type
 	string attrName = attr->getADesc()->Name();
@@ -331,7 +331,7 @@ void InstanceTranslator::AddPropertyAssertion(Individual* indvl, ObjectProperty*
 	}
 }
 
-void InstanceTranslator::AddObjectPropertyAssertion(Individual* domainIndvl, ObjectProperty* objProp, string rangeIndvlName)
+void InstanceTranslator::AddObjectPropertyAssertion(Individual* domainIndvl, ObjectProperty* objProp, string rangeIndvlName) const
 {
 	// remove blank
 	if (StrUtil::Exist(rangeIndvlName, " "))
@@ -345,7 +345,7 @@ void InstanceTranslator::AddObjectPropertyAssertion(Individual* domainIndvl, Obj
 	domainIndvl->AddObjPropertyAssertion(objProp, attrIndvl);
 }
 
-void InstanceTranslator::AddDataPropertyAssertion(Individual* domainIndvl, string domainTypeName, string datPropName, string rangeValue)
+void InstanceTranslator::AddDataPropertyAssertion(Individual* domainIndvl, string domainTypeName, string datPropName, string rangeValue) const
 {
 	if (StrUtil::Equal(datPropName, "to_decimal")
 		|| StrUtil::Equal(datPropName, "to_integer")
@@ -391,7 +391,7 @@ void InstanceTranslator::AddDataPropertyAssertion(Individual* domainIndvl, strin
 }
 
 
-void InstanceTranslator::AddPropertyAssertionsForSetBag(string aggrIndvlName, string str, const TypeDescriptor* aggrTypeDes, string& aggrName)
+void InstanceTranslator::AddPropertyAssertionsForSetBag(string aggrIndvlName, string str, const TypeDescriptor* aggrTypeDes, string& aggrName) const
 {
 	Individual* aggrIndvl = nullptr;
 	m_ontology->AddIndividual(aggrIndvlName, aggrIndvl);
@@ -412,7 +412,7 @@ void InstanceTranslator::AddPropertyAssertionsForSetBag(string aggrIndvlName, st
 	{
 		string subStr = subStrs[i];
 
-		S2OThrowExceptionIf<S2OException>(subStr.empty(), "Null string.");
+		S2OThrowExceptionIf<S2OException>(subStr.empty(), "Null string: " + aggrIndvlName);
 
 		if (attrDomRefFundType == SET_TYPE
 			|| attrDomRefFundType == BAG_TYPE)
@@ -528,7 +528,7 @@ void InstanceTranslator::AddPropertyAssertionsForSetBag(string aggrIndvlName, st
 	subStrs.clear();
 }
 
-void InstanceTranslator::AddPropertyAssertionsForArrayList(string aggrIndvlName, string str, const TypeDescriptor* aggrTypeDes, string& aggrName)
+void InstanceTranslator::AddPropertyAssertionsForArrayList(string aggrIndvlName, string str, const TypeDescriptor* aggrTypeDes, string& aggrName) const
 {
 	string aggrClassName;
 	string targetClassName;
@@ -549,7 +549,7 @@ void InstanceTranslator::AddPropertyAssertionsForArrayList(string aggrIndvlName,
 
 		string subStr = subStrs[i];
 
-		S2OThrowExceptionIf<S2OException>(subStr.empty(), "Null string.");
+		S2OThrowExceptionIf<S2OException>(subStr.empty(), "Null string: " + aggrIndvlName);
 
 		if (attrDomRefFundType == SET_TYPE
 			|| attrDomRefFundType == BAG_TYPE)
@@ -689,7 +689,7 @@ void InstanceTranslator::AddPropertyAssertionsForArrayList(string aggrIndvlName,
 	subStrs.clear();
 }
 
-void InstanceTranslator::AddPropertyAssertionForSelectFromString(Individual* indvl, ObjectProperty* objProp, string attrIndvlName, string str)
+void InstanceTranslator::AddPropertyAssertionForSelectFromString(Individual* indvl, ObjectProperty* objProp, string attrIndvlName, string str) const
 {
 	// remove null at the end
 	if (StrUtil::EndWith(str, string(1, '\0')))
@@ -705,7 +705,7 @@ void InstanceTranslator::AddPropertyAssertionForSelectFromString(Individual* ind
 	else if (StrUtil::Exist(str, "(")
 		&& StrUtil::Exist(str, ")"))
 	{
-		int leftParenLoc = str.find("(");
+		int leftParenLoc = static_cast<int>(str.find("("));
 
 		string typeName = StrUtil::ToLower(str.substr(0, leftParenLoc));
 		string typeValue = StrUtil::GetStringBetweenParenthesis(str, leftParenLoc);
@@ -796,7 +796,7 @@ void InstanceTranslator::AddPropertyAssertionForSelectFromString(Individual* ind
 
 
 // For simplified geometry representation
-void InstanceTranslator::AddDataPropertyAssertionsForCartesianPointAndDirection(Individual* indvl, string str)
+void InstanceTranslator::AddDataPropertyAssertionsForCartesianPointAndDirection(Individual* indvl, string str) const
 {
 	vector<string> subStrs;
 	StrUtil::SplitStringByCommaInParentheses(str, subStrs);
@@ -813,7 +813,7 @@ void InstanceTranslator::AddDataPropertyAssertionsForCartesianPointAndDirection(
 	AddDataPropertyAssertion(indvl, classTypeName, "has_z", z_coord);
 }
 
-void InstanceTranslator::AddPropertyAssertionsForCoordinatesList(Individual* indvl, string aggrIndvlName, string str)
+void InstanceTranslator::AddPropertyAssertionsForCoordinatesList(Individual* indvl, string aggrIndvlName, string str) const
 {
 	ObjectProperty* indvlObjProp = m_ontology->GetObjectPropertyByName("coordinates_list_has_position_coords");
 	AddObjectPropertyAssertion(indvl, indvlObjProp, aggrIndvlName + "_" + to_string((int)1));

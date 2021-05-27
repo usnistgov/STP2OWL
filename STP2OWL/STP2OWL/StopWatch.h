@@ -10,7 +10,7 @@ public:
 	void Lap();
 	void End();
 
-	void ReportTotal();
+	void ReportTotal() const;
 
 protected:
 	void ReportTimeElapsed();

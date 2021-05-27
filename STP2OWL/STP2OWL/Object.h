@@ -8,20 +8,20 @@ class Object
 {
 public:
 	Object();
-	Object(string name);
-	~Object();
+	Object(const string& name);
+	virtual ~Object();
 
-	void SetName(string name) { m_name = name; }
-	string GetName() { return m_name; }
+	void SetName(const string& name) { m_name = name; }
+	const string& GetName() const { return m_name; }
 
-	void AddAnnotation(Annotation anno) { m_annotations.emplace_back(anno); }
-	int GetAnnotationSize() { return (int)m_annotations.size(); }
-	Annotation GetAnnotationAt(int index) { return m_annotations[index]; }
+	void AddAnnotation(Annotation& anno) { m_annotations.emplace_back(anno); }
+	const int GetAnnotationSize() const { return (int)m_annotations.size(); }
+	Annotation GetAnnotationAt(const int& index) const { return m_annotations[index]; }
 	
-	string GetAnnotationStringByAnnotationProperty(AnnotationProperty* annoProp);
+	const string GetAnnotationStringByAnnotationProperty(AnnotationProperty* annoProp) const;
 
-	string GetPrefix() { return m_prefix; }
-	void SetPrefix(string prefix) { m_prefix = prefix; }
+	const string& GetPrefix() const { return m_prefix; }
+	void SetPrefix(const string& prefix) { m_prefix = prefix; }
 
 protected:
 	virtual void Clear();

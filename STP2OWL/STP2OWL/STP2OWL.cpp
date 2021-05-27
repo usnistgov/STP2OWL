@@ -5,6 +5,14 @@
 #include "SchemaChecker.h"
 #include "StopWatch.h"
 
+
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define new new(_CLIENT_BLOCK,__FILE__,__LINE__)
+#endif
+
+
 // Print out the usage
 void PrintUsage(string exe, S2O_Option& opt)
 {
@@ -169,9 +177,9 @@ int main(int argc, char* argv[])
 
 #if _DEBUG
 	opt.SetInput("C:\\Users\\User\\Desktop\\Box.stp");
-	opt.SetMode(0);
-	opt.SetOWL2Profile("QL");
-	opt.SetSimpleGeometry(1);
+	opt.SetMode(2);
+	opt.SetOWL2Profile("DL");
+	opt.SetSimpleGeometry(0);
 	opt.SetSchema("242");
 #else
 	if (!SetOption(argc, argv, opt))
@@ -191,7 +199,6 @@ int main(int argc, char* argv[])
 	{
 		StopWatch sw;
 		sw.Start();
-
 		sw.Lap();
 		
 		STP2ONT s2o(schemaChecker.GetLongName());
@@ -229,7 +236,6 @@ int main(int argc, char* argv[])
 		cout << "OWL file generation completed!" << endl;
 
 		sw.End();
-
 		sw.ReportTotal();
 
 		status = 0;
@@ -241,6 +247,11 @@ int main(int argc, char* argv[])
 
 	delete instList;
 	delete reg;
+	instList = nullptr;
+	reg = nullptr;
+
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(170);
 
 	return status;
 }

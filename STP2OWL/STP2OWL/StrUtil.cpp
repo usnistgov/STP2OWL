@@ -17,13 +17,13 @@ string StrUtil::ToUpper(string str)
 
 string StrUtil::RemoveCharacter(string str, string target)
 {
-	int location = str.find(target);
+	int location = static_cast<int>(str.find(target));
 
 	while (location != string::npos)
 	{
 		str.replace(str.find(target), target.length(), "");
 
-		location = str.find(target);
+		location = static_cast<int>(str.find(target));
 	}
 
 	return str;
@@ -31,13 +31,13 @@ string StrUtil::RemoveCharacter(string str, string target)
 
 string StrUtil::ReplaceCharacter(string str, string from, string to)
 {
-	int location = str.find(from);
+	int location = static_cast<int>(str.find(from));
 
 	while (location != string::npos)
 	{
 		str.replace(location, from.length(), to);
 
-		location = str.find(from, location + to.length());
+		location = static_cast<int>(str.find(from, location + to.length()));
 	}
 
 	return str;
@@ -48,8 +48,8 @@ string StrUtil::GetStringBetween(string str, string front, string back)
 	if (str.find(front) != string::npos
 		&& str.find(back) != string::npos)
 	{
-		int frontLocation = str.find(front) + front.length();
-		int backLocation = str.find_last_of(back);
+		int frontLocation = static_cast<int>(str.find(front) + front.length());
+		int backLocation = static_cast<int>(str.find_last_of(back));
 		int lengthBetween = backLocation - frontLocation;
 
 		str = str.substr(frontLocation, lengthBetween);
@@ -93,14 +93,14 @@ string StrUtil::GetStringBetweenParenthesis(string str, int leftParenLocation)
 
 void StrUtil::SplitStringBySeparator(string str, string sep, vector<string>& subStrs)
 {
-	int location = str.find(sep);
+	int location = static_cast<int>(str.find(sep));
 
 	while (location != string::npos)
 	{
 		subStrs.push_back(str.substr(0, location));
 		str = str.substr(location + sep.length(), str.length());
 
-		location = str.find(sep);
+		location = static_cast<int>(str.find(sep));
 	}
 
 	subStrs.push_back(str);
@@ -114,7 +114,7 @@ void StrUtil::SplitStringByCommaInParentheses(string str, vector<string>& subStr
 	string leftParen = "(";
 	string rightParen = ")";
 
-	RemoveCharacter(str, " ");
+	str = RemoveCharacter(str, " ");
 
 	// list of list OR array of array (e.g. (0,0,0),(0,0,0) )
 	if (Exist(str, leftParen)
@@ -138,7 +138,7 @@ void StrUtil::SplitStringByCommaInParentheses(string str, vector<string>& subStr
 			subStrs.push_back(token);
 			str = str.substr(location + token.length() + 1, str.length());
 
-			location = str.find(leftParen);
+			location = static_cast<int>(str.find(leftParen));
 		}
 
 		if (Exist(str, leftParen)

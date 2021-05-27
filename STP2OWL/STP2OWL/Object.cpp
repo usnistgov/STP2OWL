@@ -5,7 +5,7 @@ Object::Object()
 {
 }
 
-Object::Object(string name)
+Object::Object(const string& name)
 	:m_name(name)
 {
 }
@@ -15,7 +15,7 @@ Object::~Object()
 	Clear();
 }
 
-string Object::GetAnnotationStringByAnnotationProperty(AnnotationProperty* annoProp)
+const string Object::GetAnnotationStringByAnnotationProperty(AnnotationProperty* annoProp) const
 {
 	string annoStr;
 	
@@ -36,4 +36,5 @@ string Object::GetAnnotationStringByAnnotationProperty(AnnotationProperty* annoP
 void Object::Clear()
 {
 	m_annotations.clear();
+	m_annotations.shrink_to_fit();
 }

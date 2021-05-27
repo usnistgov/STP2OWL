@@ -79,7 +79,7 @@ bool SchemaChecker::InitializeSchema(Registry*& reg, S2O_Option& opt)
 	return false;
 }
 
-bool SchemaChecker::HasMatch(string input, string& output)
+bool SchemaChecker::HasMatch(string input, string& output) const
 {
 	for (int i = 0; i < (int)m_schemaMap.size(); ++i)
 	{
@@ -97,7 +97,7 @@ bool SchemaChecker::HasMatch(string input, string& output)
 	return false;
 }
 
-string SchemaChecker::GetLongName()
+const string& SchemaChecker::GetLongName()
 {
 	for (int i = 0; i < (int)m_schemaMap.size(); ++i)
 	{
@@ -107,11 +107,12 @@ string SchemaChecker::GetLongName()
 		if (m_targetSchemaShortName == schemaLower
 			|| m_targetSchemaShortName == schemaUpper)
 		{
-			return m_schemaMap[i].second;
+			m_targetSchemaLongName = m_schemaMap[i].second;
+			break;
 		}
 	}
 	
-	return string("");
+	return m_targetSchemaLongName;
 }
 
 void SchemaChecker::InitSchemaNames()

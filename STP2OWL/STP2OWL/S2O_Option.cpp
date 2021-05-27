@@ -72,39 +72,39 @@ void S2O_Option::SetKeepClassList(const string& path)
     }
 }
 
-void S2O_Option::SetSimpleGeometry(int simpleGeometry)
+void S2O_Option::SetSimpleGeometry(const int& simpleGeometry)
 {
     if (simpleGeometry == 1)
         m_simpleGeometry = true;
 }
 
-string S2O_Option::Output(const string& type)
+const string& S2O_Option::Output(const string& type)
 {
-    string output = m_input + "_" + type;
+    m_output = m_input + "_" + type;
 
     if (m_owl2Profile == OWL2Profile::OWL2_DL)
     {
-        output += "_DL";
+        m_output += "_DL";
     }
     else if (m_owl2Profile == OWL2Profile::OWL2_EL)
     {
-        output += "_EL";
+        m_output += "_EL";
     }
     else if (m_owl2Profile == OWL2Profile::OWL2_RL)
     {
-        output += "_RL";
+        m_output += "_RL";
     }
     else if (m_owl2Profile == OWL2Profile::OWL2_QL)
     {
-        output += "_QL";
+        m_output += "_QL";
     }
 
     if (m_simpleGeometry)
-        output += "_sim";
+        m_output += "_sim";
 
-    output += ".owl";
+    m_output += ".owl";
 
-    return output;
+    return m_output;
 }
 
 bool S2O_Option::IsKeepClass(const string& name) const
@@ -116,7 +116,7 @@ bool S2O_Option::IsKeepClass(const string& name) const
     return false;
 }
 
-bool S2O_Option::IsOWL2EL(const string& s)
+bool S2O_Option::IsOWL2EL(const string& s) const
 {
     for (int i = 0; i < (int)m_restrictionEL.size(); ++i)
     {
@@ -129,7 +129,7 @@ bool S2O_Option::IsOWL2EL(const string& s)
     return true;
 }
 
-bool S2O_Option::IsOWL2QL(const string& s)
+bool S2O_Option::IsOWL2QL(const string& s) const
 {
     for (int i = 0; i < (int)m_restrictionQL.size(); ++i)
     {
@@ -142,7 +142,7 @@ bool S2O_Option::IsOWL2QL(const string& s)
     return true;
 }
 
-bool S2O_Option::IsOWL2RL(const string& s)
+bool S2O_Option::IsOWL2RL(const string& s) const
 {
     for (int i = 0; i < (int)m_restrictionRL.size(); ++i)
     {

@@ -5,6 +5,6 @@
 class DataType : public Object
 {
 public:
-	DataType(string name);
+	DataType(const string& name);
 	~DataType();
 };

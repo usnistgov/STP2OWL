@@ -5,23 +5,23 @@ class Ontology;
 class STP2ONT
 {
 public:
-	STP2ONT(string name);
+	STP2ONT(const string& name);
 	~STP2ONT();
 
-	string GetName() { return m_name; }
-	Ontology* GetOntology() { return m_ontology; }
+	const string& GetName() const { return m_name; }
+	Ontology* GetOntology() const { return m_ontology; }
 
 	// Translate the schema to ontology.
-	void TranslateSchema(const Schema*& schema, S2O_Option& opt);
+	void TranslateSchema(const Schema*& schema, S2O_Option& opt) const;
 
 	// Translate the instances to ontology.
-	void TranslateInstances(InstMgr*& instList, S2O_Option& opt);
+	void TranslateInstances(InstMgr*& instances, S2O_Option& opt);
 
-	void SetStepPrefix(string prefix) { m_schemaPrefix = prefix; }
-	string GetStepPrefix() { return m_schemaPrefix; }
+	void SetStepPrefix(const string& prefix) { m_schemaPrefix = prefix; }
+	const string& GetStepPrefix() const { return m_schemaPrefix; }
 
 protected:
-	void SetSchemaPrefix();
+	void SetSchemaPrefix() const;
 
 private:
 	Ontology* m_ontology;

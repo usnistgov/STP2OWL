@@ -28,7 +28,7 @@ void Ontology::AddClass(const string& name, Class*& cls)
 
 	cls = new Class(name);
 
-	m_classes.emplace(name, cls);
+	m_classesMap.emplace(name, cls);
 	m_classesVec.emplace_back(cls);
 }
 
@@ -41,7 +41,7 @@ void Ontology::AddObjectProperty(const string& name, ObjectProperty*& objProp)
 
 	objProp = new ObjectProperty(name);
 
-	m_objectProperties.emplace(name, objProp);
+	m_objectPropertiesMap.emplace(name, objProp);
 	m_objectPropertiesVec.emplace_back(objProp);
 }
 
@@ -54,7 +54,7 @@ void Ontology::AddDataProperty(const string& name, DataProperty*& datProp)
 
 	datProp = new DataProperty(name);
 
-	m_dataProperties.emplace(name, datProp);
+	m_dataPropertiesMap.emplace(name, datProp);
 	m_dataPropertiesVec.emplace_back(datProp);
 }
 
@@ -67,7 +67,7 @@ void Ontology::AddIndividual(const string& name, Individual*& indvl)
 
 	indvl = new Individual(name);
 
-	m_individuals.emplace(make_pair( name, indvl ));
+	m_individualsMap.emplace(make_pair( name, indvl ));
 	m_individualsVec.emplace_back(indvl);
 }
 
@@ -80,7 +80,7 @@ void Ontology::AddDataType(const string& name, DataType*& datType)
 
 	datType = new DataType(name);
 
-	m_dataTypes.emplace(name, datType);
+	m_dataTypesMap.emplace(name, datType);
 	m_dataTypesVec.emplace_back(datType);
 }
 
@@ -93,67 +93,67 @@ void Ontology::AddAnnotationProperty(const string& name, AnnotationProperty*& an
 
 	annoProp = new AnnotationProperty(name);
 
-	m_annotationProperty.emplace(name, annoProp);
+	m_annotationPropertyMap.emplace(name, annoProp);
 	m_annotationPropertyVec.emplace_back(annoProp);
 }
 
 
-Class* Ontology::GetClassByName(const string& name)
+Class* Ontology::GetClassByName(const string& name) const
 {
 	Class* cls = nullptr;
 	
-	if (m_classes.find(name) != m_classes.end())
-		cls = m_classes.find(name)->second;
+	if (m_classesMap.find(name) != m_classesMap.end())
+		cls = m_classesMap.find(name)->second;
 	
 	return cls;
 }
 
-ObjectProperty* Ontology::GetObjectPropertyByName(const string& name)
+ObjectProperty* Ontology::GetObjectPropertyByName(const string& name) const
 {
 	ObjectProperty* objProp = nullptr;
 
-	if (m_objectProperties.find(name) != m_objectProperties.end())
-		objProp = m_objectProperties.find(name)->second;
+	if (m_objectPropertiesMap.find(name) != m_objectPropertiesMap.end())
+		objProp = m_objectPropertiesMap.find(name)->second;
 
 	return objProp;
 }
 
-DataProperty* Ontology::GetDataPropertyByName(const string& name)
+DataProperty* Ontology::GetDataPropertyByName(const string& name) const
 {
 	DataProperty* datProp = nullptr;
 
-	if (m_dataProperties.find(name) != m_dataProperties.end())
-		datProp = m_dataProperties.find(name)->second;
+	if (m_dataPropertiesMap.find(name) != m_dataPropertiesMap.end())
+		datProp = m_dataPropertiesMap.find(name)->second;
 
 	return datProp;
 }
 
-Individual* Ontology::GetIndividualByName(const string& name)
+Individual* Ontology::GetIndividualByName(const string& name) const
 {
 	Individual* indvl = nullptr;
 
-	if (m_individuals.find(name) != m_individuals.end())
-		indvl = m_individuals.find(name)->second;
+	if (m_individualsMap.find(name) != m_individualsMap.end())
+		indvl = m_individualsMap.find(name)->second;
 
 	return indvl;
 }
 
-DataType* Ontology::GetDataTypeByName(const string& name)
+DataType* Ontology::GetDataTypeByName(const string& name) const
 {
 	DataType* datType = nullptr;
 
-	if (m_dataTypes.find(name) != m_dataTypes.end())
-		datType = m_dataTypes.find(name)->second;
+	if (m_dataTypesMap.find(name) != m_dataTypesMap.end())
+		datType = m_dataTypesMap.find(name)->second;
 
 	return datType;
 }
 
-AnnotationProperty* Ontology::GetAnnotationPropertyByName(const string& name)
+AnnotationProperty* Ontology::GetAnnotationPropertyByName(const string& name) const
 {
 	AnnotationProperty* annoProp = nullptr;
 
-	if (m_annotationProperty.find(name) != m_annotationProperty.end())
-		annoProp = m_annotationProperty.find(name)->second;
+	if (m_annotationPropertyMap.find(name) != m_annotationPropertyMap.end())
+		annoProp = m_annotationPropertyMap.find(name)->second;
 
 	return annoProp;
 }
@@ -162,46 +162,59 @@ AnnotationProperty* Ontology::GetAnnotationPropertyByName(const string& name)
 
 void Ontology::Clear()
 {
-	for (auto it = begin(m_classes); it != end(m_classes); )
+	for (auto it = begin(m_classesMap); it != end(m_classesMap); )
 	{
 		delete it->second;
-		m_classes.erase(it++);
+		it->second = nullptr;
+		m_classesMap.erase(it++);
 	}
 	
-	for (auto it = begin(m_objectProperties); it != end(m_objectProperties); )
+	for (auto it = begin(m_objectPropertiesMap); it != end(m_objectPropertiesMap); )
 	{
 		delete it->second;
-		m_objectProperties.erase(it++);
+		it->second = nullptr;
+		m_objectPropertiesMap.erase(it++);
 	}
 
-	for (auto it = begin(m_dataProperties); it != end(m_dataProperties); )
+	for (auto it = begin(m_dataPropertiesMap); it != end(m_dataPropertiesMap); )
 	{
 		delete it->second;
-		m_dataProperties.erase(it++);
+		it->second = nullptr;
+		m_dataPropertiesMap.erase(it++);
 	}
 
-	for (auto it = begin(m_individuals); it != end(m_individuals); )
+	for (auto it = begin(m_individualsMap); it != end(m_individualsMap); )
 	{
 		delete it->second;
-		m_individuals.erase(it++);
+		it->second = nullptr;
+		m_individualsMap.erase(it++);
 	}
 
-	for (auto it = begin(m_dataTypes); it != end(m_dataTypes); )
+	for (auto it = begin(m_dataTypesMap); it != end(m_dataTypesMap); )
 	{
 		delete it->second;
-		m_dataTypes.erase(it++);
+		it->second = nullptr;
+		m_dataTypesMap.erase(it++);
 	}
 
-	for (auto it = begin(m_annotationProperty); it != end(m_annotationProperty); )
+	for (auto it = begin(m_annotationPropertyMap); it != end(m_annotationPropertyMap); )
 	{
 		delete it->second;
-		m_annotationProperty.erase(it++);
+		it->second = nullptr;
+		m_annotationPropertyMap.erase(it++);
 	}
 
-	m_classesVec.clear(); 
+	m_classesVec.clear();
 	m_objectPropertiesVec.clear();
 	m_dataPropertiesVec.clear();
 	m_individualsVec.clear();
 	m_dataTypesVec.clear();
 	m_annotationPropertyVec.clear();
+
+	m_classesVec.shrink_to_fit();
+	m_objectPropertiesVec.shrink_to_fit();
+	m_dataPropertiesVec.shrink_to_fit();
+	m_individualsVec.shrink_to_fit();
+	m_dataTypesVec.shrink_to_fit();
+	m_annotationPropertyVec.shrink_to_fit();
 }
