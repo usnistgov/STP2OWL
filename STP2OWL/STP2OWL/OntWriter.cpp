@@ -67,7 +67,10 @@ void OntWriter::WriteOWLFunctionalSyntax(STP2ONT& s2o, S2O_Option& opt) const
 			if (opt.Mode() != OutputMode::Integrated
 				&& ont->GetIndividualAt(i)->GetPrefix() != schemaPrefix)
 				continue;
-
+			
+			if (!IsKeepClass(ont->GetIndividualAt(i), opt))
+				continue;
+			
 			ss_owl << "Declaration(NamedIndividual(:" << name << "))\n";
 		}
 
