@@ -8,7 +8,7 @@ import sys
 if len(sys.argv) < 3 :
     logging.error("Usage: ".sys.argv[0] + "[profile] [ontology]")
 
-profile = os.getcwd() + "\\Profile\\" + sys.argv[1]
+profile = os.getcwd() + "\\Profiles\\" + sys.argv[1]
 ontology = sys.argv[2]
 
 # open file with profile specification
