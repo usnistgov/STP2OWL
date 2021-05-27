@@ -1,5 +1,5 @@
 # OWL 2 Profile Switcher
-The Profile Switcher is a python code that converts OWL 2 DL into OWLL 2 EL, QL, and RL.
+The Profile Switcher is a python code that converts OWL 2 DL into OWL 2 EL, QL, and RL.
 Please refer to [here](https://www.w3.org/TR/owl2-profiles/) for more details on OWL 2 Profiles.
 
 ## Prerequisites
