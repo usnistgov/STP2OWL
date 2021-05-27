@@ -108,10 +108,8 @@ void InstanceTranslator::AddPropertyAssertions(Individual* indvl, SDAI_Applicati
 			// save if the attribute has a redefined attribute
 			if (redefAttr)
 				redefAttrs.insert({ redefAttr , 1 });
-			else
-				redefAttrs.insert({ nullptr , 0 });
 
-			if (redefAttrs[attr] == 1)
+			if (redefAttrs.find(redefAttr) != redefAttrs.end())
 				continue;
 
 			const AttrDescriptor* attrDes = attr->getADesc();
