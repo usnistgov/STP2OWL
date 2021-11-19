@@ -30,7 +30,7 @@ The NIST STEP to OWL Translator (STP2OWL) is an open-source software, and an imp
 ## Version
 1.0
 
-## References
+## Reference
 - Kwon et al., 2022, **A new implementation of OntoSTEP: flexible generation of ontology and knowledge graphs of EXPRESS-driven data**, *ASME Journal of Computing and Information Science in Engineering*, To be published.
 
 ## Disclaimers
