@@ -24,14 +24,14 @@ The NIST STEP to OWL Translator (STP2OWL) is an open-source software, and an imp
 
 ## Contact Information
 - Soonjo Kwon, soonjo.kwon@kumoh.ac.kr
-- William Z. Bernstein, william.bernstein@nist.gov
+- William Z. Bernstein, william.bernstein@afresearchlab.com
 - Laetitia V. Monnier, lve.monnier@gmail.com
 
 ## Version
 1.0
 
 ## Reference
-- Kwon et al., 2022, [**A new implementation of OntoSTEP: Toward flexible generation of ontology and knowledge graphs of EXPRESS-driven data**](https://doi.org/10.1115/1.4053079), *ASME Journal of Computing and Information Science in Engineering*, Published online.
+- Soonjo Kwon, Laetitia V. Monnier, Raphael Barbau, William Z. Bernstein, 2022, [**A New Implementation of OntoSTEP: Flexible Generation of Ontology and Knowledge Graphs of EXPRESS-Driven Data**](https://doi.org/10.1115/1.4053079), *ASME Journal of Computing and Information Science in Engineering*, 22(2), 024502.
 
 ## Disclaimers
 [NIST Disclaimer](https://www.nist.gov/disclaimer)
