@@ -1,5 +1,6 @@
 # NIST STEP to OWL Translator (STP2OWL)
 The NIST STEP to OWL Translator (STP2OWL) is an open-source software, and an improved implementation of [OntoSTEP](https://www.nist.gov/services-resources/software/ontostep-plugin). STP2OWL translates STEP schemas (EXPRESS) and instance files (P21) into Web Ontology Language (OWL) files in a faster and more flexible way, thus furthering the adoption of the full capabilities of ISO 10303. Developed at the National Institute of Standards and Technology (NIST), the software is based on the [STEPcode](https://github.com/stepcode/stepcode) and written in C++.
+![Components and data flow of the STP2OWL(OntoSTEP)](https://user-images.githubusercontent.com/67339153/181289824-56662e6d-40d7-450c-9376-37873e9858e5.png)
 
 ## Prerequisites
 - [STEPcode](https://github.com/stepcode/stepcode) v0.9
